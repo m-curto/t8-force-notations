@@ -6,7 +6,7 @@ int VerifyIntegrity(std::string &err, AppState &app)
     int total = (149*3*4) + (4*4*2) + (2);
     int p = 0;
 
-    std::vector<const char*> notation_folder = {"T8"};
+    std::vector<const char*> notation_folder = {PAKS_FOLDER};
     std::vector<const char*> notation_style = {"default"/*,"default_dark","xbox","xbox_dark","playstation","playstation_dark"*/};
     std::vector<const char*> notation_cmd = {"X","Y","A","B"};
 
@@ -101,6 +101,82 @@ int GetComboCursor(HWND cmb)
 
 int KBL_build(HWND &, AppState&app)
 {
+    fs::path current;// = fs::current_path();
+
+    std::vector<fs::path> notation_folder = {PAKS_FOLDER};
+    std::vector<fs::path> notation_style = {"default"/*,"default_dark","xbox","xbox_dark","playstation","playstation_dark"*/};
+    std::vector<fs::path> notation_cmd = {"UP","DOWN","LEFT","RIGHT","X","Y",
+     "A","B","START","SELECT","LB","RB",
+     "LT","RT","LS_UP","LS_DOWN","LS_LEFT","LS_RIGHT",
+     "RS_UP","RS_DOWN","RS_LEFT","RS_RIGHT", "L3", "R3"};
+
+    std::vector<fs::path> bitmap_folder = {"resources"};
+    std::vector<fs::path> specific = {BMP_BACKGROUND, "resources/none.bmp"};
+
+    for (int s = 0; s < BIND_MAX; ++s)
+    {
+        int btn = GetComboCursor((HWND)app.P1[s]);
+        int cmd = GetComboCursor((HWND)app.notations[s]); (void)cmd;
+
+        if (btn > 0 && cmd > 0) {
+
+            fs::path dst = notation_folder[0] / fs::path(GetFolder(cmd)) / fs::path(notation_cmd[s]);
+            fs::path src = fs::path(KBL_FOLDER) / fs::path(P1_FOLDER) / fs::path(notation_cmd[s]);
+
+            char pak[64], ucas[64], utoc[64];
+            sprintf(pak,  "pakchunk8%03d-Windows_P.pak", s);
+            sprintf(ucas, "pakchunk8%03d-Windows_P.ucas", s);
+            sprintf(utoc, "pakchunk8%03d-Windows_P.utoc", s);
+
+            fs::path dst_pak  = dst / fs::path(pak);
+            fs::path dst_ucas = dst / fs::path(ucas);
+            fs::path dst_utoc = dst / fs::path(utoc);
+            fs::path src_pak  = src / fs::path(pak);
+            fs::path src_ucas = src / fs::path(ucas);
+            fs::path src_utoc = src / fs::path(utoc);
+
+
+
+            // fs::create_directories(dst);
+            std::cout << "{" << btn << "," << cmd << "}" << dst_pak  << " --> " << src_pak << std::endl;
+            std::cout << "{" << btn << "," << cmd << "}" << dst_ucas << " --> " << src_ucas << std::endl;
+            std::cout << "{" << btn << "," << cmd << "}" << dst_utoc << " --> " << src_utoc << std::endl;
+        }
+    }
+
+    {
+        // char pak[64], ucas[64], utoc[64];
+        // sprintf(pak, "pakchunk8%03d-Windows_P.pak", i);
+        // sprintf(ucas, "pakchunk8%03d-Windows_P.ucas", i);
+        // sprintf(utoc, "pakchunk8%03d-Windows_P.utoc", i);
+        // fs::path p_pak  = current / nf / ns / nc / pak;
+        // fs::path p_ucas = current / nf / ns / nc / ucas;
+        // fs::path p_utoc = current / nf / ns / nc / utoc;
+        // if (!fs::exists(p_pak))  { err += p_pak.string(); return false; }
+        // if (!fs::exists(p_ucas)) { err += p_pak.string(); return false; }
+        // if (!fs::exists(p_utoc)) { err += p_pak.string(); return false; }
+        // int percent = (p++ * 100) / total;
+        // SendMessage(app.hProgress, PBM_SETPOS, percent, 0);
+    }
+    return 1;
+}
+
+const char* GetFolder(int &c)
+{
+    if (c >= DEFAULT_1 && c <= DEFAULT_4) return "default";
+    if (c >= DEFAULT_DARK_1 && c <= DEFAULT_DARK_4) return "default_dark";
+    if (c >= XBOX_1 && c <= XBOX_4) return "xbox";
+    if (c >= XBOX_DARK_1 && c <= XBOX_DARK_4) return "xbox_dark";
+    if (c >= PLAYSTATION_1 && c <= PLAYSTATION_4) return "playstation";
+    if (c >= PLAYSTATION_DARK_1 && c <= PLAYSTATION_DARK_4) return "playstation_dark";
+    if (c >= NUM_1 && c <= NUM_4) return "1234";
+    if (c >= NUM_DARK_1 && c <= NUM_DARK_4) return "1234_dark";
+    return "ERR";
+}
+
+/*
+int KBL_build(HWND &, AppState&app)
+{
     std::vector<std::string> name =
     {"UP","DOWN","LEFT","RIGHT","A","B",
      "X","Y","START","SELECT","LB","RB",
@@ -120,32 +196,27 @@ int KBL_build(HWND &, AppState&app)
         if (btn > 0 && cmd > 0) {
 
             fs::path dst_nf = GetFolder(cmd);
-            fs::path dstfile = dst_f / dst_pf / name[s];
-            fs::path src_f  = "T8";
+            fs::path dst = dst_f / dst_pf / name[s];
+
+            fs::path src_f  = PAKS_FOLDER;
             fs::path src_nf = dst_nf;
             fs::path src_tf = name[s];
 
-            fs::path srcfile = src_f / src_nf / src_tf;
-            std::cout << "{" << btn << "," << cmd << "}" << "src:\t" << srcfile << std::endl;
-            std::cout << "{" << btn << "," << cmd << "}" << "dst:\t" << dstfile << std::endl;
+            fs::path src = src_f / src_nf / src_tf;
 
-            // fs::create_directories(dstfile);
-            // fs::copy_file(sample, sample2 / sample, fs::copy_options::overwrite_existing); // can throw lmao fml trycatch etc. TODO
+            fs::create_directories(dst);
+
+
+
+
+
+
+            std::cout << "{" << btn << "," << cmd << "}" << "CREATE:\t" << dst << std::endl;
+            // fs::copy_file(srcfile, dstfile, fs::copy_options::overwrite_existing); // can throw lmao fml trycatch etc. TODO
+            std::cout << "{" << btn << "," << cmd << "}" << "COPY:\t" << src << std::endl;
         }
     }
 
     return 1;
 }
-
-const char* GetFolder(int &c)
-{
-    if (c >= DEFAULT_1 && c <= DEFAULT_4) return "default";
-    if (c >= DEFAULT_DARK_1 && c <= DEFAULT_DARK_4) return "default_dark";
-    if (c >= XBOX_1 && c <= XBOX_4) return "xbox";
-    if (c >= XBOX_DARK_1 && c <= XBOX_DARK_4) return "xbox_dark";
-    if (c >= PLAYSTATION_1 && c <= PLAYSTATION_4) return "playstation";
-    if (c >= PLAYSTATION_DARK_1 && c <= PLAYSTATION_DARK_4) return "playstation_dark";
-    if (c >= NUM_1 && c <= NUM_4) return "1234";
-    if (c >= NUM_DARK_1 && c <= NUM_DARK_4) return "1234_dark";
-    return "ERR";
-}
+*/

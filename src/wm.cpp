@@ -41,47 +41,56 @@ void wm_create(HWND &hwnd, AppState &app) {
         (HMENU)ID_VERIFY,
         NULL, NULL
     );
-    int xOff = 200;
-    int yOff = 18;
-    for (int s = 0; s < BIND_MAX; ++s) {
-        if (s < 12)
-        {
-            app.P1[s] = CreateWindowExA(
-            0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,
-            xOff, yOff, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24 + s,GetModuleHandle(NULL),NULL
-            );
-        }
-        else
-        {
-            app.P1[s] = CreateWindowExA(0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,xOff+CMB_W+108, yOff, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24 + s,GetModuleHandle(NULL),NULL);
-        }
-        yOff += 26;
-        if (s == 11) yOff = 18;
-        SendMessageA(app.P1[s], CB_SETCURSEL, 0, 0);
-    }
-    yOff = 18;
+
+    int xColPad1 = 425;
+    int xColPad2 = 150;
+    int xCol1 = 184;
+    int xCol2 = xCol1 + xColPad2;
+    int xCol3 = xCol1 + xColPad1;
+    int xCol4 = xCol3 + xColPad2;
+    int yTop = 32;
+
+    int y = yTop;
+    int yRow = 45;
 
     for (int s = 0; s < BIND_MAX; ++s) {
         if (s < 12)
         {
-            app.notations[s] = CreateWindowExA(
-                0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL,
-                // notation_x - BTN_W*.5, notation_y - BTN_H*.5, NOTATION_W+NOTATION_W,NOTATION_H*NOTATION_MAX,
-                // 250, 18, NOTATION_W+NOTATION_W,NOTATION_H*NOTATION_MAX,hwnd,(HMENU)ID_NOTATIONS_TMP,GetModuleHandle(NULL),NULL
-                xOff+CMB_W+5,yOff,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL
-            );
+            // std::cout << "s" << s << "\t x" << xOff << "y" << yOff << std::endl;
+                 if (s == 4) y = yTop + (yRow*6); // UI shuffled AB<->XY order
+            else if (s == 5) y = yTop + (yRow*7);
+            else if (s == 6) y = yTop + (yRow*4);
+            else if (s == 7) y = yTop + (yRow*5);
+            else if (s == 8) y = yTop + (yRow*8);
+
+            app.P1[s] = CreateWindowExA(0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, xCol1,      y, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24+s,GetModuleHandle(NULL),NULL);
         }
         else
         {
-            app.notations[s] = CreateWindowExA(
-                0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL,
-                // notation_x - BTN_W*.5, notation_y - BTN_H*.5, NOTATION_W+NOTATION_W,NOTATION_H*NOTATION_MAX,
-                // 250, 18, NOTATION_W+NOTATION_W,NOTATION_H*NOTATION_MAX,hwnd,(HMENU)ID_NOTATIONS_TMP,GetModuleHandle(NULL),NULL
-                xOff+CMB_W+225,yOff,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL
-            );
+            app.P1[s] = CreateWindowExA(0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, xCol3, y, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24+s,GetModuleHandle(NULL),NULL);
         }
-        yOff += 26;
-        if (s == 11) yOff = 18;
+        y += yRow;
+        if (s == 11) y = yTop;
+        SendMessageA(app.P1[s], CB_SETCURSEL, 0, 0);
+    }
+    y = yTop;
+    for (int s = 0; s < BIND_MAX; ++s) {
+        if (s < 12)
+        {
+                 if (s == 4) y = yTop + (yRow*6); // UI shuffled AB<->XY order
+            else if (s == 5) y = yTop + (yRow*7);
+            else if (s == 6) y = yTop + (yRow*4);
+            else if (s == 7) y = yTop + (yRow*5);
+            else if (s == 8) y = yTop + (yRow*8);
+
+            app.notations[s] = CreateWindowExA(0,"COMBOBOX",NULL,WS_CHILD|WS_VISIBLE|CBS_DROPDOWNLIST|CBS_OWNERDRAWFIXED|CBS_HASSTRINGS|WS_VSCROLL,xCol2,y,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL);
+        }
+        else
+        {
+            app.notations[s] = CreateWindowExA(0,"COMBOBOX",NULL,WS_CHILD|WS_VISIBLE|CBS_DROPDOWNLIST|CBS_OWNERDRAWFIXED|CBS_HASSTRINGS|WS_VSCROLL,xCol4,y,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL);
+        }
+        y += yRow;
+        if (s == 11) y = yTop;
     }
 
     app.hProgress = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,

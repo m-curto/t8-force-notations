@@ -24,13 +24,13 @@
 #define ID_CMB1_24            200
 #define ID_CMB2_24            223
 
-#define MAIN_FOLDER     "T8"
+#define PAKS_FOLDER     "T8Paks"
 #define KBL_FOLDER   "KBL"
 #define P1_FOLDER   "P1"
 #define P2_FOLDER   "P2"
 
-#define WINDOW_WIDTH    835
-#define WINDOW_HEIGHT   485
+#define WINDOW_WIDTH    846
+#define WINDOW_HEIGHT   779
 #define WINDOW_X        CW_USEDEFAULT
 #define WINDOW_Y        CW_USEDEFAULT
 
