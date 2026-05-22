@@ -1,12 +1,11 @@
-#include "T8_ForceNotations.hpp"
+#include "T8ForceNotations.hpp"
 
 std::vector<fs::path> notation_cmd = {fs::path("1"),fs::path("2"),fs::path("3"),fs::path("4")};
 
 int VerifyIntegrity(std::string &err, AppState &app)
 {
     fs::path current;// = fs::current_path();
-    int total = (149*3*4) + (4*4*2) + (2);
-    int p = 0;
+    app.verifyBar.setTotal((149*3*4) + (4*4*2) + (2));
 
     std::vector<const char*> notation_folder = {PAKS_FOLDER};
     std::vector<const char*> notation_style = {"default","default_dark","xbox","xbox_dark","playstation","playstation_dark"};
@@ -33,8 +32,7 @@ int VerifyIntegrity(std::string &err, AppState &app)
                     if (!fs::exists(p_pak))  { err += p_pak.string(); return false; }
                     if (!fs::exists(p_ucas)) { err += p_pak.string(); return false; }
                     if (!fs::exists(p_utoc)) { err += p_pak.string(); return false; }
-                    int percent = (p++ * 100) / total;
-                    SendMessage(app.verifyprogressbar, PBM_SETPOS, percent, 0);
+                    app.verifyBar.step();
                 }
             }
         }
@@ -51,8 +49,7 @@ int VerifyIntegrity(std::string &err, AppState &app)
                 fs::path p_bmp = current / f / sf / bmp;
 
                 if (!fs::exists(p_bmp))  { err += p_bmp.string(); return false; }
-                int percent = (p++ * 100) / total;
-                SendMessage(app.verifyprogressbar, PBM_SETPOS, percent, 0);
+                app.verifyBar.step();
             }
         }
     }
@@ -60,12 +57,11 @@ int VerifyIntegrity(std::string &err, AppState &app)
     for (auto path : specific) {
         fs::path spec = path;
         if (!fs::exists(spec)) { err += spec.string(); return false; }
-        
-        int percent = (p++ * 100) / total;
-        SendMessage(app.verifyprogressbar, PBM_SETPOS, percent, 0);
+        app.verifyBar.step();
     }
 
     SendMessage(app.verifyprogressbar, PBM_SETPOS, 100, 0);
+
     return 1;
 }
 
@@ -78,37 +74,37 @@ void StartVerify(HWND &hwnd, AppState &app)
     else
         MessageBoxA(hwnd, (LPCSTR)MSG_VERIFY2, "Integrity Check", MB_OK | MB_ICONINFORMATION);
     SendMessage(app.verifyprogressbar, PBM_SETPOS, 0, 0);
+    app.verifyBar.reset();
+
 }
 
 void ResetCursor(HWND &target) {
     SendMessageA(target, CB_SETCURSEL, 0, 0);
 }
 
-std::string GetComboText(HWND &cmb)
+std::string GetComboText(HWND &cb)
 {
-    int index = SendMessageA(cmb, CB_GETCURSEL, 0, 0);
+    int index = SendMessageA(cb, CB_GETCURSEL, 0, 0);
     if (index == CB_ERR)
         return "";
-    int len = SendMessageA(cmb, CB_GETLBTEXTLEN, index, 0);
+    int len = SendMessageA(cb, CB_GETLBTEXTLEN, index, 0);
     std::string text(len, '\0');
-    SendMessageA(cmb, CB_GETLBTEXT, index, (LPARAM)text.data());
+    SendMessageA(cb, CB_GETLBTEXT, index, (LPARAM)text.data());
     return text;
 }
 
-int GetComboCursor(HWND cmb)
+int GetComboCursor(HWND cb)
 {
-    return SendMessageA(cmb,CB_GETCURSEL,0,0);
+    return SendMessageA(cb,CB_GETCURSEL,0,0);
 }
 
 int KBL_build(HWND &, AppState&app)
 {
     int total = 0;
-    int percent = 0;
-    int p = 0;
     for (int s = 0; s < BIND_MAX; ++s) {
-        if (GetComboCursor((HWND)app.P1[s]) > 0 && GetComboCursor((HWND)app.notations[s]) > 0) total += 5;
+        if (app.P1[s].getCursor() > 0 && app.notations[s].getCursor() > 0) total += 5;
     }
-    if (total == 0) ++total;
+    app.buildBar.setTotal(total);
 
     fs::path current;// = fs::current_path();
 
@@ -124,14 +120,14 @@ int KBL_build(HWND &, AppState&app)
 
     for (int s = 0; s < BIND_MAX; ++s)
     {
-        int btn = GetComboCursor((HWND)app.P1[s]);
-        int cmd = GetComboCursor((HWND)app.notations[s]);
+        int btn = app.P1[s].getCursor();
+        int cmd = app.notations[s].getCursor();
 
         if (btn > 0 && cmd > 0) {
 
             std::cout << "ONE" << std::endl;
             fs::path src = current / notation_folder[0] / fs::path(GetFolder(cmd)) / fs::path(GetSubFolder(cmd));
-            fs::path dst = current / fs::path(KBL_FOLDER) / fs::path(P1_FOLDER) / fs::path(GetSubFolder(cmd));
+            fs::path dst = current / fs::path(KBL_FOLDER) / (app.buildCb.getCursor() == 0 ? fs::path(P1_FOLDER) : fs::path(P2_FOLDER)) / fs::path(GetSubFolder(cmd));
             std::cout << "TWO" << std::endl;
 
             char pak[64], ucas[64], utoc[64];
@@ -146,32 +142,28 @@ int KBL_build(HWND &, AppState&app)
             fs::path dst_ucas = dst / fs::path(ucas);
             fs::path dst_utoc = dst / fs::path(utoc);
 
-            fs::create_directories(src);
-            percent = (p++ * 100) / total;
-            SendMessage(app.buildprogressbar, PBM_SETPOS, percent, 0);
 
+
+
+            fs::create_directories(src);
+            app.buildBar.step();
             fs::create_directories(dst);
-            percent = (p++ * 100) / total;
-            SendMessage(app.buildprogressbar, PBM_SETPOS, percent, 0);
+            app.buildBar.step();
 
             std::cout << "{" << btn << "," << cmd << "}" << src_pak  << " --> " << dst_pak << std::endl;
             fs::copy_file(src_pak, dst_pak, fs::copy_options::overwrite_existing); // TODO throw/exp trycatch
-            percent = (p++ * 100) / total;
-            SendMessage(app.buildprogressbar, PBM_SETPOS, percent, 0);
+            app.buildBar.step();
 
             std::cout << "{" << btn << "," << cmd << "}" << src_ucas << " --> " << dst_ucas << std::endl;
             fs::copy_file(src_ucas, dst_ucas, fs::copy_options::overwrite_existing);
-            percent = (p++ * 100) / total;
-            SendMessage(app.buildprogressbar, PBM_SETPOS, percent, 0);
+            app.buildBar.step();
 
             std::cout << "{" << btn << "," << cmd << "}" << src_utoc << " --> " << dst_utoc << std::endl;
-            percent = (p++ * 100) / total;
             fs::copy_file(src_utoc, dst_utoc, fs::copy_options::overwrite_existing);
-            SendMessage(app.buildprogressbar, PBM_SETPOS, percent, 0);
+            app.buildBar.step();
 
         }
     }
-    if (total >= 3) SendMessage(app.buildprogressbar, PBM_SETPOS, 100, 0);
     return 1;
 }
 
@@ -197,51 +189,3 @@ const char* GetSubFolder(const int &c)
 
     return "UNDEFINED"; // you hope it doesn't ig
 }
-
-
-/*
-int KBL_build(HWND &, AppState&app)
-{
-    std::vector<std::string> name =
-    {"UP","DOWN","LEFT","RIGHT","A","B",
-     "X","Y","START","SELECT","LB","RB",
-     "LT","RT","LS_UP","LS_DOWN","LS_LEFT","LS_RIGHT",
-     "RS_UP","RS_DOWN","RS_LEFT","RS_RIGHT", "L3", "R3"};
-
-    std::vector<std::string> folders =
-    { "default", "default_dark","xbox","xbox_dark","playstation","playstation_dark","1234","1234_dark"};
-
-    fs::path dst_f = "KBL";
-    fs::path dst_pf = ((int)GetComboCursor((HWND)app.buildplayer) == 0) ? "P1" : "P2";
-
-    for (int s = 0; s < BIND_MAX; ++s) {
-        int btn = GetComboCursor((HWND)app.P1[s]);
-        int cmd = GetComboCursor((HWND)app.notations[s]); (void)cmd;
-
-        if (btn > 0 && cmd > 0) {
-
-            fs::path dst_nf = GetFolder(cmd);
-            fs::path dst = dst_f / dst_pf / name[s];
-
-            fs::path src_f  = PAKS_FOLDER;
-            fs::path src_nf = dst_nf;
-            fs::path src_tf = name[s];
-
-            fs::path src = src_f / src_nf / src_tf;
-
-            fs::create_directories(dst);
-
-
-
-
-
-
-            std::cout << "{" << btn << "," << cmd << "}" << "CREATE:\t" << dst << std::endl;
-            // fs::copy_file(srcfile, dstfile, fs::copy_options::overwrite_existing); // can throw lmao fml trycatch etc. TODO
-            std::cout << "{" << btn << "," << cmd << "}" << "COPY:\t" << src << std::endl;
-        }
-    }
-
-    return 1;
-}
-*/

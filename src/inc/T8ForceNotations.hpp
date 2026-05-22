@@ -1,5 +1,5 @@
-#ifndef T8_FORCENOTATIONS_HPP
-# define T8_FORCENOTATIONS_HPP
+#ifndef T8FORCENOTATIONS_HPP
+# define T8FORCENOTATIONS_HPP
 
 #include <windows.h>
 #include <sys/stat.h>
@@ -12,18 +12,22 @@
 // #include <thread>
 // #include <FreeImage.h>
 
+# include "ProgressBar.hpp"
+# include "Button.hpp"
+# include "ComboBox.hpp"
+
 #define BMP_BACKGROUND "resources/background3.bmp"
 
 #define ID_BUILD            101
 #define ID_VERIFY           102
 #define ID_VERIFY_PMB       103
 #define ID_COMBO1           104
-#define ID_BUILDPLAYER      105
+#define ID_BUILD_CB          105
 #define ID_BUILD_PMB        106
 #define ID_CLEAR            107
 
-#define ID_CMB1_24            200
-#define ID_CMB2_24            223
+#define ID_CB1_24            200
+#define ID_CB2_24            223
 
 #define PAKS_FOLDER     "T8Paks"
 #define KBL_FOLDER   "KBL"
@@ -41,10 +45,10 @@
 #define BTN_W 180
 #define BTN_H 40
 
-#define BTN2_W CMB2_W
+#define BTN2_W CB2_W
 #define BTN2_H BTN_H
 
-#define BTN3_W CMB2_W
+#define BTN3_W CB2_W
 #define BTN3_H BTN_H*.5
 
 #define NOTATION_MAX 33
@@ -59,12 +63,12 @@
 #define PMB2_W BTN2_W
 #define PMB2_H 25
 
-#define CMB_W 100
-#define CMB_H 200
-#define CMB2_W 80
-#define CMB2_H 80
-#define CMB3_W 48
-#define CMB3_H 300
+#define CB_W 100
+#define CB_H 200
+#define CB2_W 80
+#define CB2_H 80
+#define CB3_W 48
+#define CB3_H 300
 
 namespace fs = std::filesystem;
 
@@ -124,22 +128,26 @@ struct AppState
     HBITMAP background;
     HBITMAP bmpNotations[NOTATION_MAX];
 
-    HBITMAP not1;
-    HBITMAP not2;
     HWND verifyprogressbar;
-    HWND hButton;
-    HWND P1[BIND_MAX];
-    HWND notations[BIND_MAX];
+    ComboBox P1[BIND_MAX];
+    ComboBox notations[BIND_MAX];
 
-    HWND buildprogressbar;
-    HWND buildplayer;
+    Button      buildBtn;
+    ComboBox    buildCb;
+    ProgressBar buildBar;
+
+    Button      verifyBtn;
+    ProgressBar verifyBar;
+
+    Button      clearBtn;
+
 };
 
 void wm_create(HWND&, AppState&);
 void wm_paint(HWND&, AppState&);
 void wm_app1(HWND&, AppState&);
 void wm_command(HWND&, WPARAM, AppState&);
-int  wm_drawitem(HWND &, WPARAM, LPARAM, AppState&);
+int wm_drawitem(HWND &, WPARAM, LPARAM, AppState&);
 int wm_measureitem(HWND &, WPARAM, LPARAM lParam, AppState&);
 void wm_destroy(int);
 

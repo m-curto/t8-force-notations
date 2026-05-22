@@ -1,47 +1,33 @@
-#include "T8_ForceNotations.hpp"
+#include "T8ForceNotations.hpp"
 
 void wm_create(HWND &hwnd, AppState &app) {
     std::cout << "WM_CREATE" << std::endl;
     short build_x          = WINDOW_WIDTH*.85;
     short build_y          = WINDOW_HEIGHT*.85;
-    short build_pmb_x     = build_x - PMB2_W*.5;
-    short build_pmb_y     = build_y + PMB2_H*1.2;
+    short build_pmb_x     = build_x;
+    short build_pmb_y     = build_y + PMB2_H*1.5;
 
     short verify_x     = WINDOW_WIDTH*.12;
     short verify_y     = WINDOW_HEIGHT*.8;
     short verify_pmb_x = verify_x - PMB1_W*.5;
     short verify_pmb_y = verify_y + PMB1_H*1.2;
 
-    CreateWindowW(
-        L"BUTTON",L"Build",WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        build_x,build_y,
-        BTN2_W,BTN2_H, hwnd,(HMENU)ID_BUILD,NULL,NULL
-    );
+    app.buildBtn  = Button(hwnd,ID_BUILD, "Build",            build_x,  build_y,  BTN2_W,  BTN2_H);
+    app.verifyBtn = Button(hwnd,ID_VERIFY,"Verify Integrity", verify_x, verify_y, BTN_W,   BTN_H);
+    app.clearBtn  = Button(hwnd,ID_CLEAR, "Clear",            verify_x, verify_y,  BTN3_W, BTN3_H);
 
-    app.buildplayer = CreateWindowExA(
-            0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,
-            build_x, build_y - 25,
-            CMB2_W, CMB2_H, hwnd,(HMENU)ID_BUILDPLAYER,GetModuleHandle(NULL),NULL
-    );
+    app.buildCb = ComboBox(hwnd,ID_BUILD_CB,build_x-150,build_y,CB2_W,CB2_H);
 
-    CreateWindowW(
-        L"BUTTON",L"Clear",WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        verify_x,verify_y + 25 + BTN3_H,
-        BTN3_W,BTN3_H, hwnd,(HMENU)ID_CLEAR,NULL,NULL
-    );
+    app.verifyBar = ProgressBar(hwnd,ID_VERIFY_PMB,verify_pmb_x,verify_pmb_y,PMB1_W,PMB1_H);
+    app.buildBar = ProgressBar(hwnd,ID_BUILD_PMB,build_pmb_x,build_pmb_y,PMB2_W,PMB2_H);
 
-    // build_x - BTN2_W*.5, build_y - BTN2_H*.5,
-
-    CreateWindowW(
-        L"BUTTON",
-        L"Verify Integrity",
-        WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        verify_x - BTN_W*.5, verify_y - BTN_H*.5,
-        BTN_W, BTN_H,
-        hwnd,
-        (HMENU)ID_VERIFY,
-        NULL, NULL
-    );
+    app.background = (HBITMAP)LoadImageA(
+            NULL,
+            BMP_BACKGROUND,
+            IMAGE_BITMAP,
+            0, 0,
+            LR_LOADFROMFILE
+        );
 
     int xColPad1 = 425;
     int xColPad2 = 150;
@@ -57,22 +43,21 @@ void wm_create(HWND &hwnd, AppState &app) {
     for (int s = 0; s < BIND_MAX; ++s) {
         if (s < 12)
         {
-            // std::cout << "s" << s << "\t x" << xOff << "y" << yOff << std::endl;
                  if (s == 4) y = yTop + (yRow*6); // UI shuffled AB<->XY order
             else if (s == 5) y = yTop + (yRow*7);
             else if (s == 6) y = yTop + (yRow*4);
             else if (s == 7) y = yTop + (yRow*5);
             else if (s == 8) y = yTop + (yRow*8);
 
-            app.P1[s] = CreateWindowExA(0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, xCol1,      y, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24+s,GetModuleHandle(NULL),NULL);
+            app.P1[s] = ComboBox(hwnd,ID_CB1_24+s,xCol1,y,CB_W,CB_H,CBS_OWNERDRAWFIXED|CBS_HASSTRINGS);
         }
         else
         {
-            app.P1[s] = CreateWindowExA(0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, xCol3, y, CMB_W, CMB_H, hwnd,(HMENU)ID_CMB1_24+s,GetModuleHandle(NULL),NULL);
+            app.P1[s] = ComboBox(hwnd,ID_CB1_24+s,xCol3,y,CB_W,CB_H);
         }
         y += yRow;
         if (s == 11) y = yTop;
-        SendMessageA(app.P1[s], CB_SETCURSEL, 0, 0);
+        app.P1[s].resetCursor();
     }
     y = yTop;
     for (int s = 0; s < BIND_MAX; ++s) {
@@ -84,38 +69,15 @@ void wm_create(HWND &hwnd, AppState &app) {
             else if (s == 7) y = yTop + (yRow*5);
             else if (s == 8) y = yTop + (yRow*8);
 
-            app.notations[s] = CreateWindowExA(0,"COMBOBOX",NULL,WS_CHILD|WS_VISIBLE|CBS_DROPDOWNLIST|CBS_OWNERDRAWFIXED|CBS_HASSTRINGS|WS_VSCROLL,xCol2,y,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL);
+            app.notations[s] = ComboBox(hwnd,ID_CB2_24,xCol2,y,CB3_W,CB3_H,CBS_OWNERDRAWFIXED | CBS_HASSTRINGS);
         }
         else
         {
-            app.notations[s] = CreateWindowExA(0,"COMBOBOX",NULL,WS_CHILD|WS_VISIBLE|CBS_DROPDOWNLIST|CBS_OWNERDRAWFIXED|CBS_HASSTRINGS|WS_VSCROLL,xCol4,y,CMB3_W,CMB3_H,hwnd,(HMENU)ID_CMB2_24+s,GetModuleHandle(NULL),NULL);
+            app.notations[s] = ComboBox(hwnd,ID_CB2_24,xCol4,y,CB3_W,CB3_H,CBS_OWNERDRAWFIXED | CBS_HASSTRINGS);
         }
+        app.notations[s].resetCursor();
         y += yRow;
         if (s == 11) y = yTop;
-    }
-
-    app.verifyprogressbar = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,
-        WS_CHILD | WS_VISIBLE,
-        verify_pmb_x, verify_pmb_y, PMB1_W, PMB1_H,
-        hwnd, (HMENU)ID_VERIFY_PMB, GetModuleHandle(NULL), NULL);
-    SendMessage(app.verifyprogressbar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
-
-    app.buildprogressbar = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,
-        WS_CHILD | WS_VISIBLE,
-        build_pmb_x, build_pmb_y, PMB2_W, PMB2_H,
-        hwnd, (HMENU)ID_BUILD_PMB, GetModuleHandle(NULL), NULL);
-    SendMessage(app.buildprogressbar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
-
-    app.background = (HBITMAP)LoadImageA(
-            NULL,
-            BMP_BACKGROUND,
-            IMAGE_BITMAP,
-            0, 0,
-            LR_LOADFROMFILE
-        );
-    if (!app.background)
-    {
-        MessageBoxA(NULL, std::to_string(GetLastError()).c_str(), "LoadImage error", MB_OK);
     }
 }
 
@@ -174,6 +136,7 @@ void wm_app1(HWND &, AppState &app)
 "resources/1234_dark/1234_dark_2.bmp",
 "resources/1234_dark/1234_dark_3.bmp",
 "resources/1234_dark/1234_dark_4.bmp"
+
 };
 
     for (size_t s = 0; s < bmp.size(); ++s) { // IF NOTATION_MAX != bmp.size() we segfualt ig
@@ -182,31 +145,21 @@ void wm_app1(HWND &, AppState &app)
         if (!app.bmpNotations[s]) { MessageBoxA(NULL, bmp[s], "LoadImage error", MB_OK);}
     }
 
-    HFONT hFont = CreateFontA(
-        24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
-        ""
-    );
-
     for (size_t s = 0; s < BIND_MAX; ++s) {
         for (auto n : name) {
-            SendMessageA(app.P1[s], CB_ADDSTRING, 0, (LPARAM)n);
+            app.P1[s].addContent(n);
         }
     }
 
     for (int s = 0; s < BIND_MAX; ++s) {
-        SendMessageA(app.P1[s], CB_SETCURSEL, 0, 0);
-        SendMessageA(app.notations[s], CB_SETCURSEL, 0, 0);
-
-        SendMessageA(app.P1[s], WM_SETFONT, (WPARAM)hFont, TRUE);
-        // SendMessageA(app.notations[s], WM_SETFONT, (WPARAM)hFont, TRUE);
+        app.P1[s].setFont(24);
 
         for (auto b : bmp) {
-            SendMessageA(app.notations[s], CB_ADDSTRING, 0, (LPARAM)b);
+            app.notations[s].addContent(b);
         }
     }
-    SendMessageA(app.buildplayer, CB_ADDSTRING, 0, (LPARAM)"Player1");
-    SendMessageA(app.buildplayer, CB_ADDSTRING, 0, (LPARAM)"Player2");
-    SendMessageA(app.buildplayer, CB_SETCURSEL, 0, 0);
+    app.buildCb.addContent("Player1");
+    app.buildCb.addContent("Player2");
 }
 
 void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
@@ -218,31 +171,19 @@ void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
         else if (LOWORD(wParam) == ID_CLEAR)
         {
             for (int s = 0; s < BIND_MAX; ++s) {
-                // int btn = GetComboCursor((HWND)app.P1[s]);
-                // int cmd = GetComboCursor((HWND)app.notations[s]);
-                ResetCursor(app.P1[s]);
-                ResetCursor(app.notations[s]);
-                ResetCursor(app.buildplayer);
+                app.P1[s].resetCursor();
+                app.notations[s].resetCursor();
             }
+            app.buildCb.resetCursor();
         }
         else if (LOWORD(wParam) == ID_VERIFY)
         {
             // VerifyIntegrity();
             StartVerify(hwnd,app);
         }
-        else if (LOWORD(wParam) == ID_COMBO1)
+        else if (LOWORD(wParam) >= ID_CB1_24 && LOWORD(wParam) <= ID_CB2_24 + 24)
         {
-            int index = SendMessageA(app.P1[SLOT_UP], CB_GETCURSEL, 0, 0);
-            if (index != CB_ERR)
-            {
-                char buffer[256];
-                SendMessageA(app.P1[SLOT_UP], CB_GETLBTEXT, index, (LPARAM)buffer);
-                std::cout << "COMBO1:\t" << buffer << std::endl;
-            }
-        }
-        else if ( LOWORD(wParam) >= ID_CMB1_24 && LOWORD(wParam) <= ID_CMB2_24 + 24)
-        {
-            SendMessage(app.buildprogressbar, PBM_SETPOS, 0, 0);
+            app.buildBar.reset();
         }
 }
 
