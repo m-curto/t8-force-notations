@@ -19,7 +19,8 @@
 #define ID_VERIFY_PMB       103
 #define ID_COMBO1           104
 #define ID_BUILDPLAYER      105
-#define ID_CLEAR            106
+#define ID_BUILD_PMB        106
+#define ID_CLEAR            107
 
 #define ID_CMB1_24            200
 #define ID_CMB2_24            223
@@ -52,8 +53,11 @@
 #define NOTATION_W 25
 #define NOTATION_H 25
 
-#define PMB_W BTN_W // 300
-#define PMB_H 25    // 25
+#define PMB1_W BTN_W // 300
+#define PMB1_H 25    // 25
+
+#define PMB2_W BTN2_W
+#define PMB2_H 25
 
 #define CMB_W 100
 #define CMB_H 200
@@ -122,10 +126,12 @@ struct AppState
 
     HBITMAP not1;
     HBITMAP not2;
-    HWND hProgress;
+    HWND verifyprogressbar;
     HWND hButton;
     HWND P1[BIND_MAX];
     HWND notations[BIND_MAX];
+
+    HWND buildprogressbar;
     HWND buildplayer;
 };
 
@@ -144,6 +150,7 @@ int KBL_build(HWND &hwnd, AppState &);
 
 std::string GetComboText(HWND &);
 int GetComboCursor(HWND);
-const char* GetFolder(int&);
+const char* GetFolder(const int&);
+const char* GetSubFolder(const int&);
 
 #endif

@@ -2,34 +2,35 @@
 
 void wm_create(HWND &hwnd, AppState &app) {
     std::cout << "WM_CREATE" << std::endl;
-    short create_x     = WINDOW_WIDTH*.85;
-    short create_y     = WINDOW_HEIGHT*.75;
+    short build_x          = WINDOW_WIDTH*.85;
+    short build_y          = WINDOW_HEIGHT*.85;
+    short build_pmb_x     = build_x - PMB2_W*.5;
+    short build_pmb_y     = build_y + PMB2_H*1.2;
+
     short verify_x     = WINDOW_WIDTH*.12;
     short verify_y     = WINDOW_HEIGHT*.8;
-    short verify_pmb_x = verify_x - PMB_W*.5;
-    short verify_pmb_y = verify_y + PMB_H*1.2;
-    // short notation_x     = WINDOW_WIDTH*.35;
-    // short notation_y     = WINDOW_HEIGHT*.8;
+    short verify_pmb_x = verify_x - PMB1_W*.5;
+    short verify_pmb_y = verify_y + PMB1_H*1.2;
 
     CreateWindowW(
         L"BUTTON",L"Build",WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        create_x,create_y,
+        build_x,build_y,
         BTN2_W,BTN2_H, hwnd,(HMENU)ID_BUILD,NULL,NULL
     );
 
-
     app.buildplayer = CreateWindowExA(
             0, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL,
-            create_x, create_y - 25,
+            build_x, build_y - 25,
             CMB2_W, CMB2_H, hwnd,(HMENU)ID_BUILDPLAYER,GetModuleHandle(NULL),NULL
     );
+
     CreateWindowW(
         L"BUTTON",L"Clear",WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        create_x,create_y + 25 + BTN3_H,
+        verify_x,verify_y + 25 + BTN3_H,
         BTN3_W,BTN3_H, hwnd,(HMENU)ID_CLEAR,NULL,NULL
     );
 
-    // create_x - BTN2_W*.5, create_y - BTN2_H*.5,
+    // build_x - BTN2_W*.5, build_y - BTN2_H*.5,
 
     CreateWindowW(
         L"BUTTON",
@@ -93,12 +94,18 @@ void wm_create(HWND &hwnd, AppState &app) {
         if (s == 11) y = yTop;
     }
 
-    app.hProgress = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,
-            WS_CHILD | WS_VISIBLE,
-            verify_pmb_x, verify_pmb_y, PMB_W, PMB_H,
-            hwnd, (HMENU)ID_VERIFY_PMB, GetModuleHandle(NULL), NULL);
-    SendMessage(app.hProgress, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
-    PostMessage(hwnd, WM_APP + 1, 0, 0);
+    app.verifyprogressbar = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,
+        WS_CHILD | WS_VISIBLE,
+        verify_pmb_x, verify_pmb_y, PMB1_W, PMB1_H,
+        hwnd, (HMENU)ID_VERIFY_PMB, GetModuleHandle(NULL), NULL);
+    SendMessage(app.verifyprogressbar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+
+    app.buildprogressbar = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR) NULL,
+        WS_CHILD | WS_VISIBLE,
+        build_pmb_x, build_pmb_y, PMB2_W, PMB2_H,
+        hwnd, (HMENU)ID_BUILD_PMB, GetModuleHandle(NULL), NULL);
+    SendMessage(app.buildprogressbar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+
     app.background = (HBITMAP)LoadImageA(
             NULL,
             BMP_BACKGROUND,
@@ -130,10 +137,7 @@ void wm_paint(HWND &hwnd, AppState &app) {
 
 void wm_app1(HWND &, AppState &app)
 {
-    // std::map<std::string, int>  combo1 ={{"0",1},"1","2","3","4","5","6","7","8","9","space"};
-    std::vector<const char *> name = {
-"- -","0","1","2","3","4","5","6","7","8","9","Ctrl.",".Shift","Shift.","Insert","Home","PageUp","Delete","End","PageDown","ArrowUp","ArrowLeft","ArrowRight","ArrowDown","ArrowUp","ArrowLeft","ArrowRight","ArrowDown","NumPad 0","NumPad 1","NumPad 2","NumPad 3","NumPad 4","NumPad 5","NumPad 6","NumPad 7","NumPad 8","NumPad 9","NumPad /","NumPad *","NumPad -","NumPad +","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","-","^","¥","@","[","]",";",":",",",".","/","\\","=","`",")","$","Ù","*","!","ß","'","Ü","Ä","Ì","È","Ò","À","i","Ñ","Ç","~","¿","<","ظ","ฟ","²","#","o̲","}","|","{","Ж","б","ю","ë","x","ъ","Э","ك","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","tab",".Alt","Alt.","CapsLock","ScrollLock"
-};
+    std::vector<const char *> name = {"- -","0","1","2","3","4","5","6","7","8","9","Space","Ctrl.",".Ctrl",".Shift","Shift.","Insert","Home","PageUp","Delete","End","PageDown","ArrowUp","ArrowLeft","ArrowRight","ArrowDown","NumPad 0","NumPad 1","NumPad 2","NumPad 3","NumPad 4","NumPad 5","NumPad 6","NumPad 7","NumPad 8","NumPad 9","NumPad /","NumPad *","NumPad -","NumPad +","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","-","^","¥","@","[","]",";",":",",",".","/","\\","=","`",")","$","Ù","*","!","ß","'","Ü","+","Ö","Ä","Ì","È","Ò","À","i","Ñ","Ç","~","¿","<","ظ","ฟ","²","#","o̲","}","|","{","Ж","б","ю","ë","x","ъ","Э","ك","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","_","TODO","TODO","TODO","TODO","\'","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","tab",".Alt","Alt.","CapsLock","ScrollLock"};
 
     std::vector<const char *> bmp = {
 "resources/none.bmp",
@@ -190,12 +194,6 @@ void wm_app1(HWND &, AppState &app)
     }
 
     for (int s = 0; s < BIND_MAX; ++s) {
-        for (auto b : bmp) {
-            SendMessageA(app.notations[s], CB_ADDSTRING, 0, (LPARAM)b);
-        }
-    }
-
-    for (int s = 0; s < BIND_MAX; ++s) {
         SendMessageA(app.P1[s], CB_SETCURSEL, 0, 0);
         SendMessageA(app.notations[s], CB_SETCURSEL, 0, 0);
 
@@ -209,7 +207,6 @@ void wm_app1(HWND &, AppState &app)
     SendMessageA(app.buildplayer, CB_ADDSTRING, 0, (LPARAM)"Player1");
     SendMessageA(app.buildplayer, CB_ADDSTRING, 0, (LPARAM)"Player2");
     SendMessageA(app.buildplayer, CB_SETCURSEL, 0, 0);
-
 }
 
 void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
@@ -225,6 +222,7 @@ void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
                 // int cmd = GetComboCursor((HWND)app.notations[s]);
                 ResetCursor(app.P1[s]);
                 ResetCursor(app.notations[s]);
+                ResetCursor(app.buildplayer);
             }
         }
         else if (LOWORD(wParam) == ID_VERIFY)
@@ -241,6 +239,10 @@ void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
                 SendMessageA(app.P1[SLOT_UP], CB_GETLBTEXT, index, (LPARAM)buffer);
                 std::cout << "COMBO1:\t" << buffer << std::endl;
             }
+        }
+        else if ( LOWORD(wParam) >= ID_CMB1_24 && LOWORD(wParam) <= ID_CMB2_24 + 24)
+        {
+            SendMessage(app.buildprogressbar, PBM_SETPOS, 0, 0);
         }
 }
 
