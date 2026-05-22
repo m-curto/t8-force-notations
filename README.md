@@ -1,9 +1,8 @@
-# T8 Force Notations (v3.00.02)
+<h1 align="center">T8 Force Notations (v3.00.02)</h1>
 
-<!-- <img align=center src=""> -->
-because i can't bear it anymore
+<img align=center src="https://github.com/m-curto/t8-force-notations/blob/main/resources/readme/header.jpg">
 
-Changes Tekken 8 button notations by generating a custom keyboard layout.
+<h2 align="center">Changes Tekken 8 button notations by generating a custom keyboard layout.</h2>
 
 T8FN lets you:
 - select your input files,
