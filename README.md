@@ -32,6 +32,11 @@ T8 Force Notations reads your inputs, pick the correct files, rearranges them, a
 * [ ] header
 * [ ] request notation section prerequisites
 - [ ] support controller
-- [ ] layout presets
+- [x] layout presets
 - [ ] music
 - [ ] quick guide `it's my first mod`
+- [ ] check duplicates console icons
+- [ ] support special char display combobox
+- [ ] support 1+2 1+2+3 etc..
+- [ ] warning presets that erase previous input
+- [ ] merge struct notation BMP+Cursor+KeyCodes

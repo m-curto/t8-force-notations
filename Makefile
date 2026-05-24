@@ -21,6 +21,7 @@ SRC			=	$(SRC_PATH)Bitmap.cpp \
 				$(SRC_PATH)ComboBox.cpp \
 				$(SRC_PATH)main.cpp \
 				$(SRC_PATH)ProgressBar.cpp \
+				$(SRC_PATH)struct.cpp \
 				$(SRC_PATH)utils.cpp \
 				$(SRC_PATH)wm.cpp
 

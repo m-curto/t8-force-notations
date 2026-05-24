@@ -21,9 +21,9 @@ void wm_create(HWND &hwnd, AppState &app) {
     short verify_x     = WINDOW_WIDTH*.05, verify_pmb_x = verify_x;
     short verify_y     = WINDOW_HEIGHT*.85, verify_pmb_y = verify_y + BTN_H+5;
 
-    app.buildBtn  = Button(hwnd,ID_BUILD, "Build",            build_x,  build_y,  BTN2_W,  BTN2_H);
+    app.buildBtn = Button(hwnd,ID_BUILD, "Build",            build_x,  build_y,  BTN2_W,  BTN2_H);
     app.buildBar = ProgressBar(hwnd,ID_BUILD_PMB,build_pmb_x,build_pmb_y,PMB2_W,PMB2_H);
-    app.buildCb = ComboBox(hwnd,ID_BUILD_CB,build_x-150,build_y,CB2_W,CB2_H);
+    app.buildCb  = ComboBox(hwnd,ID_BUILD_CB,build_x-150,build_y,CB2_W,CB2_H);
 
     app.presetCb  = ComboBox(hwnd,ID_PRESET_CB,            preset_x,           preset_y, BTN_W,   CB_H);
     app.clearBtn  = Button(hwnd,ID_CLEAR, "Clear",         preset_x,           preset_y+30,      BTN_W*0.5, BTN_H);
@@ -100,52 +100,8 @@ void wm_paint(HWND &hwnd, AppState &app) {
 
 void wm_app1(HWND &, AppState &app)
 {
-    std::vector<const char *> name = {"- -","0","1","2","3","4","5","6","7","8","9","Space","Ctrl.",".Ctrl",".Shift","Shift.","Insert","Home","PageUp","Delete","End","PageDown","ArrowUp","ArrowLeft","ArrowRight","ArrowDown","NumPad 0","NumPad 1","NumPad 2","NumPad 3","NumPad 4","NumPad 5","NumPad 6","NumPad 7","NumPad 8","NumPad 9","NumPad /","NumPad *","NumPad -","NumPad +","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","-","^","¥","@","[","]",";",":",",",".","/","\\","=","`",")","$","Ù","*","!","ß","'","Ü","+","Ö","Ä","Ì","È","Ò","À","i","Ñ","Ç","~","¿","<","ظ","ฟ","²","#","o̲","}","|","{","Ж","б","ю","ë","x","ъ","Э","ك","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","_","TODO","TODO","TODO","TODO","\'","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","tab",".Alt","Alt.","CapsLock","ScrollLock"};
-
-    std::vector<const char *> bmp = {
-"resources/none.bmp",
-
-"resources/default/default_1.bmp",
-"resources/default/default_2.bmp",
-"resources/default/default_3.bmp",
-"resources/default/default_4.bmp",
-"resources/default_dark/default_dark_1.bmp",
-"resources/default_dark/default_dark_2.bmp",
-"resources/default_dark/default_dark_3.bmp",
-"resources/default_dark/default_dark_4.bmp",
-"resources/xbox/xbox_1.bmp",
-"resources/xbox/xbox_2.bmp",
-"resources/xbox/xbox_3.bmp",
-"resources/xbox/xbox_4.bmp",
-"resources/xbox_dark/xbox_dark_1.bmp",
-"resources/xbox_dark/xbox_dark_2.bmp",
-"resources/xbox_dark/xbox_dark_3.bmp",
-"resources/xbox_dark/xbox_dark_4.bmp",
-"resources/playstation/playstation_1.bmp",
-"resources/playstation/playstation_2.bmp",
-"resources/playstation/playstation_3.bmp",
-"resources/playstation/playstation_4.bmp",
-"resources/playstation_dark/playstation_dark_1.bmp",
-"resources/playstation_dark/playstation_dark_2.bmp",
-"resources/playstation_dark/playstation_dark_3.bmp",
-"resources/playstation_dark/playstation_dark_4.bmp",
-"resources/1234/1234_1.bmp",
-"resources/1234/1234_2.bmp",
-"resources/1234/1234_3.bmp",
-"resources/1234/1234_4.bmp",
-"resources/1234_dark/1234_dark_1.bmp",
-"resources/1234_dark/1234_dark_2.bmp",
-"resources/1234_dark/1234_dark_3.bmp",
-"resources/1234_dark/1234_dark_4.bmp",
-// "resources/playstation_vertical/playstation_vertical_1.bmp",
-// "resources/playstation_vertical/playstation_vertical_2.bmp",
-// "resources/playstation_vertical/playstation_vertical_3.bmp",
-// "resources/playstation_vertical/playstation_vertical_4.bmp",
-// "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
-// "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
-// "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
-// "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
-};
+    std::vector<const char *> name = get_cmd();
+    std::vector<const char *> bmp = get_paths();
 
     if (nm > bmp.size())
         nm = bmp.size();
@@ -169,6 +125,7 @@ void wm_app1(HWND &, AppState &app)
     app.presetCb.addContent("Keyboard Settings 1");
     app.presetCb.addContent("Keyboard Settings 2");
     app.presetCb.addContent("Navigation Cluster");
+    app.presetCb.addContent("Invisible");
 
     // std::cout << SendMessageA(app.presetCb.cb, CB_GETCURSEL,0,0) << std::endl;
 }
