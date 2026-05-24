@@ -25,6 +25,7 @@ class ComboBox
         void addContent(const std::string &);
         int getCursor();
         std::string getContent();
+        int setCursor(const int &);
         void resetCursor();
 
         UINT_PTR ID;

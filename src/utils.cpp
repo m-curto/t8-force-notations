@@ -189,3 +189,52 @@ const char* GetSubFolder(const int &c)
 
     return "UNDEFINED"; // you hope it doesn't ig
 }
+
+int preset(AppState &app, const int &c) {
+    if (c == 0) { // "Keyboard Settings 1"
+        app.P1[0].setCursor(KC_W);  app.notations[0].setCursor(NONE);       app.P1[12].setCursor(KC_L);             app.notations[12].setCursor(NONE);
+        app.P1[1].setCursor(KC_S);  app.notations[1].setCursor(NONE);       app.P1[13].setCursor(KC_SEMI_COLON);    app.notations[13].setCursor(NONE);
+        app.P1[2].setCursor(KC_A);  app.notations[2].setCursor(NONE);       app.P1[14].setCursor(NONE);             app.notations[14].setCursor(NONE);
+        app.P1[3].setCursor(KC_D);  app.notations[3].setCursor(NONE);       app.P1[15].setCursor(NONE);             app.notations[15].setCursor(NONE);
+        app.P1[4].setCursor(KC_J);  app.notations[4].setCursor(DEFAULT_3);  app.P1[16].setCursor(NONE);             app.notations[16].setCursor(NONE);
+        app.P1[5].setCursor(KC_K);  app.notations[5].setCursor(DEFAULT_4);  app.P1[17].setCursor(NONE);             app.notations[17].setCursor(NONE);
+        app.P1[6].setCursor(KC_U);  app.notations[6].setCursor(DEFAULT_1);  app.P1[18].setCursor(NONE);             app.notations[18].setCursor(NONE);
+        app.P1[7].setCursor(KC_I);  app.notations[7].setCursor(DEFAULT_2);  app.P1[19].setCursor(NONE);             app.notations[19].setCursor(NONE);
+        app.P1[8].setCursor(KC_B);  app.notations[8].setCursor(NONE);       app.P1[20].setCursor(NONE);             app.notations[20].setCursor(NONE);
+        app.P1[9].setCursor(KC_V);  app.notations[9].setCursor(NONE);       app.P1[21].setCursor(NONE);             app.notations[21].setCursor(NONE);
+        app.P1[10].setCursor(KC_O); app.notations[10].setCursor(NONE);      app.P1[22].setCursor(KC_C);             app.notations[22].setCursor(NONE);
+        app.P1[11].setCursor(KC_P); app.notations[11].setCursor(NONE);      app.P1[23].setCursor(KC_N);             app.notations[23].setCursor(NONE);
+    }
+    else if (c == 1) { // "Keyboard Settings 2"
+        app.P1[0].setCursor(KC_ARROWUP);    app.notations[0].setCursor(NONE);       app.P1[12].setCursor(KC_NUMPAD_PLUS);   app.notations[12].setCursor(NONE);
+        app.P1[1].setCursor(KC_ARROWDOWN);  app.notations[1].setCursor(NONE);       app.P1[13].setCursor(KC_NUMPAD_6);      app.notations[13].setCursor(NONE);
+        app.P1[2].setCursor(KC_ARROWLEFT);  app.notations[2].setCursor(NONE);       app.P1[14].setCursor(KC_NUMPAD_PLUS);   app.notations[14].setCursor(NONE);
+        app.P1[3].setCursor(KC_ARROWRIGHT); app.notations[3].setCursor(NONE);       app.P1[15].setCursor(NONE);             app.notations[15].setCursor(NONE);
+        app.P1[4].setCursor(KC_NUMPAD_4);   app.notations[4].setCursor(DEFAULT_3);  app.P1[16].setCursor(NONE);             app.notations[16].setCursor(NONE);
+        app.P1[5].setCursor(KC_NUMPAD_5);   app.notations[5].setCursor(DEFAULT_4);  app.P1[17].setCursor(NONE);             app.notations[17].setCursor(NONE);
+        app.P1[6].setCursor(KC_NUMPAD_7);   app.notations[6].setCursor(DEFAULT_1);  app.P1[18].setCursor(NONE);             app.notations[18].setCursor(NONE);
+        app.P1[7].setCursor(KC_NUMPAD_8);   app.notations[7].setCursor(DEFAULT_2);  app.P1[19].setCursor(NONE);             app.notations[19].setCursor(NONE);
+        app.P1[8].setCursor(KC_HOME);       app.notations[8].setCursor(NONE);       app.P1[20].setCursor(NONE);             app.notations[20].setCursor(NONE);
+        app.P1[9].setCursor(KC_INSERT);     app.notations[9].setCursor(NONE);       app.P1[21].setCursor(NONE);             app.notations[21].setCursor(NONE);
+        app.P1[10].setCursor(KC_MINUS);     app.notations[10].setCursor(NONE);      app.P1[22].setCursor(KC_DELETE);        app.notations[22].setCursor(NONE);
+        app.P1[11].setCursor(KC_NUMPAD_9);  app.notations[11].setCursor(NONE);      app.P1[23].setCursor(KC_END);           app.notations[23].setCursor(NONE);
+    }
+    else if (c == 2) { // "Navigation Cluster"
+        app.P1[0].setCursor(KC_SPACE);      app.notations[0].setCursor(NONE);   app.P1[12].setCursor(KC_1);   app.notations[12].setCursor(NONE);
+        app.P1[1].setCursor(KC_S);          app.notations[1].setCursor(NONE);   app.P1[13].setCursor(KC_2);   app.notations[13].setCursor(NONE);
+        app.P1[2].setCursor(KC_A);          app.notations[2].setCursor(NONE);   app.P1[14].setCursor(KC_3);   app.notations[14].setCursor(NONE);
+        app.P1[3].setCursor(KC_D);          app.notations[3].setCursor(NONE);   app.P1[15].setCursor(KC_4);   app.notations[15].setCursor(NONE);
+        app.P1[4].setCursor(KC_DELETE);     app.notations[4].setCursor(XBOX_3);   app.P1[16].setCursor(KC_5);   app.notations[16].setCursor(NONE);
+        app.P1[5].setCursor(KC_END);        app.notations[5].setCursor(XBOX_4);   app.P1[17].setCursor(KC_6);   app.notations[17].setCursor(NONE);
+        app.P1[6].setCursor(KC_INSERT);     app.notations[6].setCursor(XBOX_1);   app.P1[18].setCursor(KC_7);   app.notations[18].setCursor(NONE);
+        app.P1[7].setCursor(KC_HOME);       app.notations[7].setCursor(XBOX_2);   app.P1[19].setCursor(KC_8);   app.notations[19].setCursor(NONE);
+        app.P1[8].setCursor(KC_CSBRACKET);  app.notations[8].setCursor(NONE);   app.P1[20].setCursor(KC_9);   app.notations[20].setCursor(NONE);
+        app.P1[9].setCursor(KC_BACKSLASH);  app.notations[9].setCursor(NONE);   app.P1[21].setCursor(KC_0);   app.notations[21].setCursor(NONE);
+        app.P1[10].setCursor(KC_PAGEUP);    app.notations[10].setCursor(NONE);  app.P1[22].setCursor(KC_F11); app.notations[22].setCursor(NONE);
+        app.P1[11].setCursor(KC_PAGEDOWN);  app.notations[11].setCursor(NONE);  app.P1[23].setCursor(KC_F12); app.notations[23].setCursor(NONE);
+    }
+    else
+        return 0;
+
+    return 1;
+}

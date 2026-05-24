@@ -3,7 +3,7 @@
 Button::Button()
 // : ID(0),x(0),y(0),w(0),h(0)
 {
-    
+
 }
 
 Button::Button(HWND &hwnd,const UINT_PTR &ID,const std::string &name,const int &xPos,const int &yPos,const int &width,const int &height)

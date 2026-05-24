@@ -64,7 +64,6 @@ void ComboBox::setFont(const int &size) {
         size, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH,
         "");
     SendMessageA(cb, WM_SETFONT, (WPARAM)font, TRUE);
-
 }
 
 
@@ -79,6 +78,10 @@ void ComboBox::resetCursor() {
 
 int ComboBox::getCursor() {
     return SendMessageA(cb,CB_GETCURSEL,0,0);
+}
+
+int ComboBox::setCursor(const int &c) {
+    return SendMessageA(cb,CB_SETCURSEL,c,0);
 }
 
 std::string ComboBox::getContent() {
