@@ -1,11 +1,13 @@
 #include "T8ForceNotations.hpp"
 
+size_t nm = NOTATION_MAX;
+
 void wm_create(HWND &hwnd, AppState &app) {
     int CB_W = 100, CB2_W = 80, CB3_W = 48;
     int CB_H = 200, CB2_H = 80, CB3_H = 300;
 
-    int BTN_W = 180, BTN2_W = CB2_W, BTN3_W = CB2_W;
-    int BTN_H = 40,  BTN2_H = BTN_H, BTN3_H = BTN_H*.5;
+    int BTN_W = 180, BTN2_W = CB2_W; //BTN3_W = CB2_W;
+    int BTN_H = 40,  BTN2_H = BTN_H; //BTN3_H = BTN_H*.5;
 
     int PMB1_W = BTN_W, PMB2_W = BTN2_W;
     int PMB1_H = 25,    PMB2_H = 25;
@@ -134,28 +136,32 @@ void wm_app1(HWND &, AppState &app)
 "resources/1234_dark/1234_dark_1.bmp",
 "resources/1234_dark/1234_dark_2.bmp",
 "resources/1234_dark/1234_dark_3.bmp",
-"resources/1234_dark/1234_dark_4.bmp"
-
+"resources/1234_dark/1234_dark_4.bmp",
+// "resources/playstation_vertical/playstation_vertical_1.bmp",
+// "resources/playstation_vertical/playstation_vertical_2.bmp",
+// "resources/playstation_vertical/playstation_vertical_3.bmp",
+// "resources/playstation_vertical/playstation_vertical_4.bmp",
+// "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
+// "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
+// "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
+// "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
 };
 
-    for (size_t s = 0; s < bmp.size(); ++s) { // IF NOTATION_MAX != bmp.size() we segfualt ig
+    if (nm > bmp.size())
+        nm = bmp.size();
+    for (size_t s = 0; s < nm; ++s) { // IF NOTATION_MAX < bmp.size() we segfualt ig
         app.bmpNotations[s].load(bmp[s], NOTATION_W,NOTATION_H);
     }
 
     for (size_t s = 0; s < BIND_MAX; ++s) {
+        // app.P1[s].setFont(24);
         for (auto n : name) {
             app.P1[s].addContent(n);
         }
-    }
-
-    for (int s = 0; s < BIND_MAX; ++s) {
-        // app.P1[s].setFont(24);
-
         for (auto b : bmp) {
             app.notations[s].addContent(b);
         }
     }
-
 
     app.buildCb.addContent("Player1");
     app.buildCb.addContent("Player2");
@@ -169,7 +175,10 @@ void wm_app1(HWND &, AppState &app)
 
 void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
     std::cout << "WM_COMMAND LOWORD==" << LOWORD(wParam) << std::endl;
-       if (LOWORD(wParam) == ID_BUILD)
+
+    if (LOWORD(wParam) != ID_BUILD) app.buildBar.reset();
+
+    if (LOWORD(wParam) == ID_BUILD)
         {
             KBL_build(hwnd,app);
         }
@@ -200,7 +209,8 @@ int wm_drawitem(HWND &, WPARAM, LPARAM lParam, AppState &app) {
     LPDRAWITEMSTRUCT dis = (LPDRAWITEMSTRUCT)lParam;
     static int delme = 0; std::cout << "WM_DRAWITEM " << delme++ << "\t" << dis->itemID << std::endl;
 
-    for (size_t s = 0; s < NOTATION_MAX; ++s) {
+
+    for (size_t s = 0; s < nm; ++s) {
         if (dis->itemID == s) {
             app.bmpNotations[s].draw(dis);
             break;

@@ -32,7 +32,7 @@
 #define MSG_VERIFY1 "MISSING FILE "
 #define MSG_VERIFY2 "WE GOOD"
 
-#define NOTATION_MAX 33
+#define NOTATION_MAX 100
 #define BIND_MAX 24
 
 // #define BTN_W 180
