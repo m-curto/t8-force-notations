@@ -36,14 +36,34 @@ std::vector<const char *> get_paths() {
 "resources/1234_dark/1234_dark_2.bmp",
 "resources/1234_dark/1234_dark_3.bmp",
 "resources/1234_dark/1234_dark_4.bmp",
-// "resources/playstation_vertical/playstation_vertical_1.bmp",
-// "resources/playstation_vertical/playstation_vertical_2.bmp",
-// "resources/playstation_vertical/playstation_vertical_3.bmp",
-// "resources/playstation_vertical/playstation_vertical_4.bmp",
+
+"resources/1234_vertical/1234_vertical_1.bmp",
+"resources/1234_vertical/1234_vertical_2.bmp",
+"resources/1234_vertical/1234_vertical_3.bmp",
+"resources/1234_vertical/1234_vertical_4.bmp",
 // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
 // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
 // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
 // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+"resources/playstation_vertical/playstation_vertical_1.bmp",
+"resources/playstation_vertical/playstation_vertical_2.bmp",
+"resources/playstation_vertical/playstation_vertical_3.bmp",
+"resources/playstation_vertical/playstation_vertical_4.bmp",
+// "resources/playstation_vertical_dark/playstation_vertical_1_dark.bmp",
+// "resources/playstation_vertical_dark/playstation_vertical_2_dark.bmp",
+// "resources/playstation_vertical_dark/playstation_vertical_3_dark.bmp",
+// "resources/playstation_vertical_dark/playstation_vertical_4_dark.bmp",
+// "resources/xbox_vertical/xbox_vertical_1.bmp",
+// "resources/xbox_vertical/xbox_vertical_2.bmp",
+// "resources/xbox_vertical/xbox_vertical_3.bmp",
+// "resources/xbox_vertical/xbox_vertical_4.bmp",
+// "resources/xbox_vertical_dark/xbox_vertical_dark_1.bmp",
+// "resources/xbox_vertical_dark/xbox_vertical_dark_2.bmp",
+// "resources/xbox_vertical_dark/xbox_vertical_dark_3.bmp",
+// "resources/xbox_vertical_dark/xbox_vertical_dark_4.bmp",
+
+
+
 // "resources/xsx/XSX_A.bmp",
 // "resources/xsx/XSX_B.bmp",
 // "resources/xsx/XSX_COMMON.bmp",
@@ -76,7 +96,6 @@ std::vector<const char *> get_paths() {
 // "resources/xsx/XSX_VIEW.bmp",
 // "resources/xsx/XSX_X.bmp",
 // "resources/xsx/XSX_Y.bmp",
-
 
 // "resources/ps5/PS5_CIRCLE.bmp",
 // "resources/ps5/PS5_CREATE.bmp",
@@ -159,6 +178,15 @@ std::vector<const char *> get_paths() {
 // "resources/cmn/NOSELECT.bmp",
 // "resources/cmn/RAGE.bmp",
 // "resources/cmn/ZONE.bmp",
+
+// "resources/CMN_Arts/CMN_Arts_Crouching.bmp",
+// "resources/CMN_Arts/CMN_Arts_FloorBreak.bmp",
+// "resources/CMN_Arts/CMN_Arts_Gauge.bmp",
+// "resources/CMN_Arts/CMN_Arts_Homing.bmp",
+// "resources/CMN_Arts/CMN_Arts_PowerCrash.bmp",
+// "resources/CMN_Arts/CMN_Arts_Tornade.bmp",
+// "resources/CMN_Arts/CMN_Arts_WallBreak.bmp",
+// "resources/CMN_Arts/CMN_Arts_Zone.bmp",
 
 };
 
