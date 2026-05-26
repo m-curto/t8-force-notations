@@ -177,6 +177,11 @@ const char* GetFolder(const int &c)
     if (c >= PLAYSTATION_DARK_1 && c <= PLAYSTATION_DARK_4) return "playstation_dark";
     if (c >= NUM_1 && c <= NUM_4) return "1234";
     if (c >= NUM_DARK_1 && c <= NUM_DARK_4) return "1234_dark";
+    if (c >= PLAYSTATION_VERTICAL_1 && c <= PLAYSTATION_VERTICAL_4) return "playstation_vertical";
+    if (c >= PLAYSTATION_VERTICAL_DARK_1 && c <= PLAYSTATION_VERTICAL_DARK_4) return "playstation_vertical_dark";
+    if (c >= NUM_VERTICAL_1 && c <= NUM_VERTICAL_4) return "1234_vertical";
+    if (c >= NUM_VERTICAL_DARK_1 && c <= NUM_VERTICAL_DARK_4) return "1234_vertical_dark";
+
     return "ERR";
 }
 

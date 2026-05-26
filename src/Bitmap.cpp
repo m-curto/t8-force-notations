@@ -94,7 +94,9 @@ int Bitmap::load(const char *path, const int &width, const int &height) {
     w = width;
     h = height;
     bmp = (HBITMAP)LoadImageA(NULL,path,IMAGE_BITMAP,w,h,LR_LOADFROMFILE);
-    if (!bmp)
-        return 0; // MessageBoxA(NULL, path, "LoadImage error", MB_OK)
+    if (!bmp) {
+        // MessageBoxA(NULL, path, "LoadImage error", MB_OK);
+        return 0;
+    }
     return 1;
 }

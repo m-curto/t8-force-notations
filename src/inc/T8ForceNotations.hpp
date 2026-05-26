@@ -267,14 +267,28 @@ enum BMP_NOTATION {
     NUM_DARK_3,         // "resources/1234_dark/1234_dark_3.bmp",
     NUM_DARK_4,         // "resources/1234_dark/1234_dark_4.bmp",
 
-    PLAYSTATION_VERTICAL_DARK_1,    // "resources/playstation_vertical/playstation_vertical_1.bmp",
-    PLAYSTATION_VERTICAL_DARK_2,    // "resources/playstation_vertical/playstation_vertical_2.bmp",
-    PLAYSTATION_VERTICAL_DARK_3,    // "resources/playstation_vertical/playstation_vertical_3.bmp",
-    PLAYSTATION_VERTICAL_DARK_4,    // "resources/playstation_vertical/playstation_vertical_4.bmp",
+    PLAYSTATION_VERTICAL_1,    // "resources/playstation_vertical/playstation_vertical_1.bmp",
+    PLAYSTATION_VERTICAL_2,    // "resources/playstation_vertical/playstation_vertical_2.bmp",
+    PLAYSTATION_VERTICAL_3,    // "resources/playstation_vertical/playstation_vertical_3.bmp",
+    PLAYSTATION_VERTICAL_4,    // "resources/playstation_vertical/playstation_vertical_4.bmp",
+    PLAYSTATION_VERTICAL_DARK_1,    // "resources/playstation_vertical_dark/playstation_vertical_dark_1.bmp",
+    PLAYSTATION_VERTICAL_DARK_2,    // "resources/playstation_vertical_dark/playstation_vertical_dark_2.bmp",
+    PLAYSTATION_VERTICAL_DARK_3,    // "resources/playstation_vertical_dark/playstation_vertical_dark_3.bmp",
+    PLAYSTATION_VERTICAL_DARK_4,    // "resources/playstation_vertical_dark/playstation_vertical_dark_4.bmp",
+    NUM_VERTICAL_1,            // "resources/1234_vertical/1234_vertical_1.bmp",
+    NUM_VERTICAL_2,            // "resources/1234_vertical/1234_vertical_2.bmp",
+    NUM_VERTICAL_3,            // "resources/1234_vertical/1234_vertical_3.bmp",
+    NUM_VERTICAL_4,            // "resources/1234_vertical/1234_vertical_4.bmp",
     NUM_VERTICAL_DARK_1,            // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
     NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
     NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
     NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+
+    ASSIST,             // "resources/cmn/ASSIST.bmp",
+    BLANK,              // "resources/cmn/BLANK.bmp",
+    NOSELECT,           // "resources/cmn/NOSELECT.bmp",
+    RAGE,               // "resources/cmn/RAGE.bmp",
+    ZONE,               // "resources/cmn/ZONE.bmp",
 
     XSX_A,                  // "resources/xsx/XSX_A.bmp",
     XSX_B,                  // "resources/xsx/XSX_B.bmp",
@@ -384,11 +398,6 @@ enum BMP_NOTATION {
     CMD_38,             // "resources/cmd/CMD_38.bmp",
     CMD_39,             // "resources/cmd/CMD_39.bmp",
 
-    ASSIST,             // "resources/cmn/ASSIST.bmp",
-    BLANK,              // "resources/cmn/BLANK.bmp",
-    NOSELECT,           // "resources/cmn/NOSELECT.bmp",
-    RAGE,               // "resources/cmn/RAGE.bmp",
-    ZONE,               // "resources/cmn/ZONE.bmp",
 };
 
 struct AppState
