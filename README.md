@@ -1,4 +1,4 @@
-<h1 align="center">T8 Force Notations (v3.00.02)</h1>
+<h1 align="center">T8 Force Notations (v3.00.02) WIP</h1>
 
 <img align=center src="https://github.com/m-curto/t8-force-notations/blob/main/resources/readme/header.jpg">
 
