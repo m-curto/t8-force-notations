@@ -16,7 +16,8 @@ SYS_LIB		=	-lgdi32
 # -lX11 -lpthread -ldl -lm
 # -lglfw
 
-SRC			=	$(SRC_PATH)Bitmap.cpp \
+SRC			=	$(SRC_PATH)Actor.cpp \
+				$(SRC_PATH)Bitmap.cpp \
 				$(SRC_PATH)Button.cpp \
 				$(SRC_PATH)ComboBox.cpp \
 				$(SRC_PATH)main.cpp \

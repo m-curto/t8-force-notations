@@ -9,7 +9,9 @@
 #include <map>
 #include <commctrl.h>
 
-class Button
+#include "Actor.hpp"
+
+class Button : public Actor
 {
     public:
         Button();
@@ -19,15 +21,6 @@ class Button
         ~Button();
         Button& operator=(const Button &);
 
-        void setPos(const int&x,const int&y);
-
-        UINT_PTR ID;
-    private:
-        HWND    btn;
-        std::string name;
-        int     x,y,w,h;
 };
-
-std::ostream& operator<<(std::ostream&, const Button&);
 
 #endif

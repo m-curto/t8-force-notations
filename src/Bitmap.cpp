@@ -7,36 +7,30 @@ Bitmap::Bitmap()
 }
 
 Bitmap::Bitmap(const std::string &path,const int &width,const int &height)
-: path(path),w(width),h(height)
+: Actor(101,path,0,0,width,height)
 {
-        bmp = (HBITMAP)LoadImageA(
-            NULL,
-            path.c_str(),
-            IMAGE_BITMAP,
-            w,h,
-            LR_LOADFROMFILE
-        );
+    std::cout << "NAME: " << name << std::endl;
+    bmp = (HBITMAP)LoadImageA(
+        NULL,
+        name.c_str(),
+        IMAGE_BITMAP,
+        w,h,
+        LR_LOADFROMFILE
+    );
 }
 
-Bitmap::Bitmap(const Bitmap &other) { *this = other; }
+Bitmap::Bitmap(const Bitmap &other)
+: Actor(other)
+{ *this = other; }
 
 Bitmap& Bitmap::operator=(const Bitmap &other) {
     if (this != &other) {
-        this->path = other.path;
         this->bmp = other.bmp;
-        this->w = other.w;
-        this->h = other.h;
     }
     return *this;
 }
 
 Bitmap::~Bitmap() {}
-
-std::ostream& operator<<(std::ostream& os, const Bitmap&)
-{
-    os << "TODO";
-    return os;
-}
 
 int Bitmap::paint(HDC &hdc) {
     HDC memDC = CreateCompatibleDC(hdc);
@@ -93,7 +87,14 @@ int Bitmap::draw(LPDRAWITEMSTRUCT &dis)
 int Bitmap::load(const char *path, const int &width, const int &height) {
     w = width;
     h = height;
-    bmp = (HBITMAP)LoadImageA(NULL,path,IMAGE_BITMAP,w,h,LR_LOADFROMFILE);
+    name = path;
+    bmp = (HBITMAP)LoadImageA(
+        NULL,
+        name.c_str(),
+        IMAGE_BITMAP,
+        w,h,
+        LR_LOADFROMFILE
+    );
     if (!bmp) {
         // MessageBoxA(NULL, path, "LoadImage error", MB_OK);
         return 0;

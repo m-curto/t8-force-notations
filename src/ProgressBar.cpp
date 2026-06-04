@@ -1,32 +1,23 @@
 #include "ProgressBar.hpp"
 
-ProgressBar::ProgressBar()
-// : ID(0),x(0),y(0),w(0),h(0)
-{
-    
-}
+ProgressBar::ProgressBar() {}
 
 ProgressBar::ProgressBar(HWND &hwnd,const UINT_PTR &ID,const int &xPos,const int &yPos,const int &width,const int &height)
-: ID(ID),x(xPos),y(yPos),w(width),h(height)
+: Actor(ID,"",xPos,yPos,width,height)
 {
-    std::cout << "ID:" << ID << std::endl;
-    bar = CreateWindowEx(0, PROGRESS_CLASS, (LPTSTR)NULL,
-        WS_CHILD | WS_VISIBLE,
-        x, y, w, h,
-        hwnd, reinterpret_cast<HMENU>(ID), GetModuleHandle(NULL), NULL);
-    SendMessage(bar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+    this->hwnd = CreateWindowEx(
+        0, PROGRESS_CLASS, (LPTSTR)NULL,WS_CHILD | WS_VISIBLE,
+        x, y, w, h, hwnd, reinterpret_cast<HMENU>(ID), GetModuleHandle(NULL), NULL);
+    SendMessage(this->hwnd, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
 }
 
-ProgressBar::ProgressBar(const ProgressBar &other) { *this = other; }
+ProgressBar::ProgressBar(const ProgressBar &other)
+: Actor(other)
+{ *this = other; }
 
 ProgressBar& ProgressBar::operator=(const ProgressBar &other) {
     if (this != &other) {
-        this->ID = other.ID;
-        this->bar = other.bar;
-        this->x = other.x;
-        this->y = other.y;
-        this->w = other.w;
-        this->h = other.h;
+        this->hwnd = other.hwnd;
         this->total = other.total;
         this->p = other.p;
     }
@@ -35,36 +26,23 @@ ProgressBar& ProgressBar::operator=(const ProgressBar &other) {
 
 ProgressBar::~ProgressBar() {}
 
-std::ostream& operator<<(std::ostream& os, const ProgressBar&)
-{
-    os << "TODO";
-    return os;
-}
-
-
 void ProgressBar::step() {
     if (p < total)
-        SendMessage(bar, PBM_SETPOS, ++p, 0);
+        SendMessage(hwnd, PBM_SETPOS, ++p, 0);
 }
 
 void ProgressBar::reset() {
     p = 0;
-    SendMessage(bar, PBM_SETPOS, 0, 0);
+    SendMessage(hwnd, PBM_SETPOS, 0, 0);
 }
 
 void ProgressBar::setTotal(const int &t) {
     total = t;
-    SendMessage(bar, PBM_SETRANGE, 0, MAKELPARAM(0, total));
+    SendMessage(hwnd, PBM_SETRANGE, 0, MAKELPARAM(0, total));
 }
 void ProgressBar::addTotal(const int &t) { 
     total += t;
-    SendMessage(bar, PBM_SETRANGE, 0, MAKELPARAM(0, total));
-}
-
-void ProgressBar::setPos(const int &newX, const int &newY) {
-    x = newX;
-    y = newY;
-    SetWindowPos(bar, NULL, x, y, w, h, SWP_NOZORDER);
+    SendMessage(hwnd, PBM_SETRANGE, 0, MAKELPARAM(0, total));
 }
 
 // PBM_SETRANGE (WM_USER+1)

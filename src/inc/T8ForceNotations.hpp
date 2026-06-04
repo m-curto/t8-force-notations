@@ -1,65 +1,34 @@
 #ifndef T8FORCENOTATIONS_HPP
 # define T8FORCENOTATIONS_HPP
 
-#include <windows.h>
-#include <sys/stat.h>
-#include <iostream>
-#include <filesystem>
-#include <vector>
-#include <map>
-#include <commctrl.h>
+# include <windows.h>
+# include <sys/stat.h>
+# include <iostream>
+# include <filesystem>
+# include <vector>
+# include <map>
+# include <commctrl.h>
 // #pragma comment(lib, "Comctl32.lib")
 // #include <thread>
 // #include <FreeImage.h>
 
+# include "define.hpp"
 # include "ProgressBar.hpp"
 # include "Button.hpp"
 # include "ComboBox.hpp"
 # include "Bitmap.hpp"
 
-#define BMP_BACKGROUND "resources/background3.bmp"
-
-#define PAKS_FOLDER     "T8Paks"
-#define KBL_FOLDER   "KBL"
-#define P1_FOLDER   "P1"
-#define P2_FOLDER   "P2"
-
-#define WINDOW_WIDTH    846
-#define WINDOW_HEIGHT   779
-#define WINDOW_X        CW_USEDEFAULT
-#define WINDOW_Y        CW_USEDEFAULT
-
-#define MSG_VERIFY1 "MISSING FILE "
-#define MSG_VERIFY2 "WE GOOD"
-
-#define NOTATION_MAX 200
-#define BIND_MAX 24
-
-// #define BTN_W 180
-// #define BTN_H 40
-
-// #define BTN2_W CB2_W
-// #define BTN2_H BTN_H
-
-// #define BTN3_W CB2_W
-// #define BTN3_H BTN_H*.5
-
-#define NOTATION_W 25
-#define NOTATION_H 25
-
-// #define PMB1_W BTN_W // 300
-// #define PMB1_H 25    // 25
-
-// #define PMB2_W BTN2_W
-// #define PMB2_H 25
-
 namespace fs = std::filesystem;
 
-enum SLOT {
-    SLOT_UP,
-    SLOT_DOWN,
-    SLOT_LEFT,
-    SLOT_RIGHT
+enum ID_LAYOUT {
+    LAYOUT_KB = 0,
+    LAYOUT_XSX,
+};
+
+enum ID_BACKGROUND {
+    BG_KB = 0,
+    BG_XSX,
+    BG_PS,
 };
 
 enum ID_SLOT {
@@ -71,11 +40,11 @@ enum ID_SLOT {
     ID_BUILD_PMB,
     ID_CLEAR,
     ID_PRESET,
-    ID_PRESET_CB,
+    ID_PRESET_KB_CB,
+    ID_PRESET_XSX_CB,
+    ID_LAYOUT_CB,
+    ID_CONTROLLER,
 };
-
-#define ID_CB1_24            200
-#define ID_CB2_24            223
 
 enum KEYCODE {
     KC_NONE = 0,
@@ -231,7 +200,6 @@ enum KEYCODE {
     KC_SCROLLLOCK
 };
 
-
 enum BMP_NOTATION {
     NONE,               // "resources/none.bmp",
     DEFAULT_1,          // "resources/default/default_1.bmp",
@@ -279,10 +247,10 @@ enum BMP_NOTATION {
     NUM_VERTICAL_2,            // "resources/1234_vertical/1234_vertical_2.bmp",
     NUM_VERTICAL_3,            // "resources/1234_vertical/1234_vertical_3.bmp",
     NUM_VERTICAL_4,            // "resources/1234_vertical/1234_vertical_4.bmp",
-    NUM_VERTICAL_DARK_1,            // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
-    NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
-    NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
-    NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+    // NUM_VERTICAL_DARK_1,            // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
+    // NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
+    // NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
+    // NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
 
     ASSIST,             // "resources/cmn/ASSIST.bmp",
     BLANK,              // "resources/cmn/BLANK.bmp",
@@ -405,10 +373,14 @@ struct AppState
     Bitmap bmpNotations[NOTATION_MAX];
 
     HWND verifyprogressbar;
-    ComboBox P1[BIND_MAX];
+    ComboBox KB[BIND_MAX];
     ComboBox notations[BIND_MAX];
 
-    Bitmap background;
+    ComboBox XSX[XSX_MAX];
+
+    int background_current = BG_KB;
+    int layout_current = LAYOUT_KB;
+    Bitmap background[BG_MAX];
 
 
     Button      buildBtn;
@@ -416,7 +388,9 @@ struct AppState
     ProgressBar buildBar;
 
     Button      presetBtn;
-    ComboBox    presetCb;
+    ComboBox    presetCb[PRESET_MAX];
+
+    ComboBox    layoutCb;
 
     Button      verifyBtn;
     ProgressBar verifyBar;
@@ -437,7 +411,10 @@ void StartVerify(HWND&, AppState&);
 int  VerifyIntegrity(std::string &err, AppState&);
 void ResetCursor(HWND &target);
 int KBL_build(HWND &hwnd, AppState &);
+
 int preset(AppState &app, const int &cursor);
+int layout(AppState &app, const int &layout);
+int clear(AppState &app);
 
 std::string GetComboText(HWND &);
 int GetComboCursor(HWND);
@@ -445,5 +422,6 @@ const char* GetFolder(const int&);
 const char* GetSubFolder(const int&);
 std::vector<const char *> get_paths();
 std::vector<const char *> get_cmd();
+
 
 #endif

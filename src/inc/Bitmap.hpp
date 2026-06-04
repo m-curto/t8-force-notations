@@ -1,15 +1,9 @@
 #ifndef BITMAP_HPP
 # define BITMAP_HPP
 
-#include <windows.h>
-#include <sys/stat.h>
-#include <iostream>
-#include <filesystem>
-#include <vector>
-#include <map>
-#include <commctrl.h>
+# include "Actor.hpp"
 
-class Bitmap
+class Bitmap : public Actor
 {
     public:
         Bitmap();
@@ -24,12 +18,9 @@ class Bitmap
 
         int load(const char *path, const int &width,const int &height);
 
+    public:
         HBITMAP bmp;
-    private:
-        std::string path;
-        int     w,h;
 };
 
-std::ostream& operator<<(std::ostream&, const Bitmap&);
 
 #endif

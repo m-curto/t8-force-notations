@@ -1,4 +1,4 @@
-<h1 align="center">T8 Force Notations (v3.00.02)</h1>
+<h1 align="center">T8 Force Notations (v3.01.01)</h1>
 
 <img align=center src="https://github.com/m-curto/t8-force-notations/blob/main/resources/readme/header.jpg">
 
@@ -40,3 +40,6 @@ T8 Force Notations reads your inputs, pick the correct files, rearranges them, a
 - [ ] support 1+2 1+2+3 etc..
 - [ ] warning presets that erase previous input
 - [ ] merge struct notation BMP+Cursor+KeyCodes
+- [x] 169 191 264
+- [x] 197 198 (as intended)
+- [ ] shuffled XYAB ui doublecheck
