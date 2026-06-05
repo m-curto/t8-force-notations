@@ -84,9 +84,14 @@ int Bitmap::draw(LPDRAWITEMSTRUCT &dis)
     return 1;
 }
 
+// int Bitmap::load(const wchar_t *path, const int &width, const int &height) {
 int Bitmap::load(const char *path, const int &width, const int &height) {
     w = width;
     h = height;
+    
+    // std::wstring ws(path);
+    // std::string tmp(ws.begin(), ws.end()); // BIG SCOTCH TODO
+    // name = tmp;
     name = path;
     bmp = (HBITMAP)LoadImageA(
         NULL,

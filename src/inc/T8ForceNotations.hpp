@@ -6,7 +6,7 @@
 # include <iostream>
 # include <filesystem>
 # include <vector>
-# include <map>
+# include <array>
 # include <commctrl.h>
 // #pragma comment(lib, "Comctl32.lib")
 // #include <thread>
@@ -200,7 +200,7 @@ enum KEYCODE {
     KC_SCROLLLOCK
 };
 
-enum BMP_NOTATION {
+enum PAKS_NOTATION {
     NONE,               // "resources/none.bmp",
     DEFAULT_1,          // "resources/default/default_1.bmp",
     DEFAULT_2,          // "resources/default/default_2.bmp",
@@ -247,10 +247,19 @@ enum BMP_NOTATION {
     NUM_VERTICAL_2,            // "resources/1234_vertical/1234_vertical_2.bmp",
     NUM_VERTICAL_3,            // "resources/1234_vertical/1234_vertical_3.bmp",
     NUM_VERTICAL_4,            // "resources/1234_vertical/1234_vertical_4.bmp",
-    // NUM_VERTICAL_DARK_1,            // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
-    // NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
-    // NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
-    // NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+    NUM_VERTICAL_DARK_1,            // "resources/1234_vertical_dark/1234_vertical_dark_1.bmp",
+    NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
+    NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
+    NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+
+    ARTS_CROUCHING,     // "resources/CMN_Arts/CMN_Arts_Crouching.bmp"
+    ARTS_FLOORBREAK,    // "resources/CMN_Arts/CMN_Arts_FloorBreak.bmp"
+    ARTS_GAUGE,         // "resources/CMN_Arts/CMN_Arts_Gauge.bmp"
+    ARTS_HOMING,        // "resources/CMN_Arts/CMN_Arts_Homing.bmp"
+    ARTS_POWERCRASH,    // "resources/CMN_Arts/CMN_Arts_PowerCrash.bmp"
+    ARTS_TORNADE,       // "resources/CMN_Arts/CMN_Arts_Tornade.bmp"
+    ARTS_WALLBREAK,     // "resources/CMN_Arts/CMN_Arts_WallBreak.bmp"
+    ARTS_ZONE,          // "resources/CMN_Arts/CMN_Arts_Zone.bmp"
 
     ASSIST,             // "resources/cmn/ASSIST.bmp",
     BLANK,              // "resources/cmn/BLANK.bmp",
@@ -258,114 +267,114 @@ enum BMP_NOTATION {
     RAGE,               // "resources/cmn/RAGE.bmp",
     ZONE,               // "resources/cmn/ZONE.bmp",
 
-    XSX_A,                  // "resources/xsx/XSX_A.bmp",
-    XSX_B,                  // "resources/xsx/XSX_B.bmp",
-    XSX_COMMON,             // "resources/xsx/XSX_COMMON.bmp",
-    XSX_DIRECTIONAL,        // "resources/xsx/XSX_DIRECTIONAL.bmp",
-    XSX_DOWN,               // "resources/xsx/XSX_DOWN.bmp",
-    XSX_L,                  // "resources/xsx/XSX_L.bmp",
-    XSX_LB,                 // "resources/xsx/XSX_LB.bmp",
-    XSX_LB_LINE,            // "resources/xsx/XSX_LB_Line.bmp",
-    XSX_LB_OFF,             // "resources/xsx/XSX_LB_Off.bmp",
-    XSX_LEFT,               // "resources/xsx/XSX_LEFT.bmp",
-    XSX_LEFT_RIGHT,         // "resources/xsx/XSX_LEFT_RIGHT.bmp",
-    XSX_LS,                 // "resources/xsx/XSX_LS.bmp",
-    XSX_LT_LINE,            // "resources/xsx/XSX_LT_Line.bmp",
-    XSX_LT_OFF,             // "resources/xsx/XSX_LT_Off.bmp",
-    XSX_LT_ON,              // "resources/xsx/XSX_LT_On.bmp",
-    XSX_MENU,               // "resources/xsx/XSX_MENU.bmp",
-    XSX_R,                  // "resources/xsx/XSX_R.bmp",
-    XSX_RB,                 // "resources/xsx/XSX_RB.bmp",
-    XSX_RB_LINE,            // "resources/xsx/XSX_RB_Line.bmp",
-    XSX_RB_OFF,             // "resources/xsx/XSX_RB_Off.bmp",
-    XSX_RIGHT,              // "resources/xsx/XSX_RIGHT.bmp",
-    XSX_RS,                 // "resources/xsx/XSX_RS.bmp",
-    XSX_RS_X,               // "resources/xsx/XSX_RS_X.bmp",
-    XSX_RS_Y,               // "resources/xsx/XSX_RS_Y.bmp",
-    XSX_RT_LINE,            // "resources/xsx/XSX_RT_Line.bmp",
-    XSX_RT_OFF,             // "resources/xsx/XSX_RT_Off.bmp",
-    XSX_RT_ON,              // "resources/xsx/XSX_RT_On.bmp",
-    XSX_UP,                 // "resources/xsx/XSX_UP.bmp",
-    XSX_UP_DOWN,            // "resources/xsx/XSX_UP_DOWN.bmp",
-    XSX_VIEW,               // "resources/xsx/XSX_VIEW.bmp",
-    XSX_X,                  // "resources/xsx/XSX_X.bmp",
-    XSX_Y,                  // "resources/xsx/XSX_Y.bmp",
+    // XSX_A,                  // "resources/xsx/XSX_A.bmp",
+    // XSX_B,                  // "resources/xsx/XSX_B.bmp",
+    // XSX_COMMON,             // "resources/xsx/XSX_COMMON.bmp",
+    // XSX_DIRECTIONAL,        // "resources/xsx/XSX_DIRECTIONAL.bmp",
+    // XSX_DOWN,               // "resources/xsx/XSX_DOWN.bmp",
+    // XSX_L,                  // "resources/xsx/XSX_L.bmp",
+    // XSX_LB,                 // "resources/xsx/XSX_LB.bmp",
+    // XSX_LB_LINE,            // "resources/xsx/XSX_LB_Line.bmp",
+    // XSX_LB_OFF,             // "resources/xsx/XSX_LB_Off.bmp",
+    // XSX_LEFT,               // "resources/xsx/XSX_LEFT.bmp",
+    // XSX_LEFT_RIGHT,         // "resources/xsx/XSX_LEFT_RIGHT.bmp",
+    // XSX_LS,                 // "resources/xsx/XSX_LS.bmp",
+    // XSX_LT_LINE,            // "resources/xsx/XSX_LT_Line.bmp",
+    // XSX_LT_OFF,             // "resources/xsx/XSX_LT_Off.bmp",
+    // XSX_LT_ON,              // "resources/xsx/XSX_LT_On.bmp",
+    // XSX_MENU,               // "resources/xsx/XSX_MENU.bmp",
+    // XSX_R,                  // "resources/xsx/XSX_R.bmp",
+    // XSX_RB,                 // "resources/xsx/XSX_RB.bmp",
+    // XSX_RB_LINE,            // "resources/xsx/XSX_RB_Line.bmp",
+    // XSX_RB_OFF,             // "resources/xsx/XSX_RB_Off.bmp",
+    // XSX_RIGHT,              // "resources/xsx/XSX_RIGHT.bmp",
+    // XSX_RS,                 // "resources/xsx/XSX_RS.bmp",
+    // XSX_RS_X,               // "resources/xsx/XSX_RS_X.bmp",
+    // XSX_RS_Y,               // "resources/xsx/XSX_RS_Y.bmp",
+    // XSX_RT_LINE,            // "resources/xsx/XSX_RT_Line.bmp",
+    // XSX_RT_OFF,             // "resources/xsx/XSX_RT_Off.bmp",
+    // XSX_RT_ON,              // "resources/xsx/XSX_RT_On.bmp",
+    // XSX_UP,                 // "resources/xsx/XSX_UP.bmp",
+    // XSX_UP_DOWN,            // "resources/xsx/XSX_UP_DOWN.bmp",
+    // XSX_VIEW,               // "resources/xsx/XSX_VIEW.bmp",
+    // XSX_X,                  // "resources/xsx/XSX_X.bmp",
+    // XSX_Y,                  // "resources/xsx/XSX_Y.bmp",
 
-    PS5_CIRCLE,         // "resources/ps5/PS5_CIRCLE.bmp",
-    PS5_CREATE,         // "resources/ps5/PS5_CREATE.bmp",
-    PS5_CROSS,          // "resources/ps5/PS5_CROSS.bmp",
-    PS5_DIRECTIONAL,    // "resources/ps5/PS5_DIRECTIONAL.bmp",
-    PS5_DOWN,           // "resources/ps5/PS5_DOWN.bmp",
-    PS5_L1_LINE,        // "resources/ps5/PS5_L1_Line.bmp",
-    PS5_L1_OFF,         // "resources/ps5/PS5_L1_Off.bmp",
-    PS5_L1_ON,          // "resources/ps5/PS5_L1_On.bmp",
-    PS5_L2_LINE,        // "resources/ps5/PS5_L2_Line.bmp",
-    PS5_L2_OFF,         // "resources/ps5/PS5_L2_Off.bmp",
-    PS5_L2_ON,          // "resources/ps5/PS5_L2_On.bmp",
-    PS5_L3,             // "resources/ps5/PS5_L3.bmp",
-    PS5_LEFT,           // "resources/ps5/PS5_LEFT.bmp",
-    PS5_LEFT_RIGHT,     // "resources/ps5/PS5_LEFT_RIGHT.bmp",
-    PS5_LS,             // "resources/ps5/PS5_LS.bmp",
-    PS5_OPTIONS,        // "resources/ps5/PS5_OPTIONS.bmp",
-    PS5_PS5,            // "resources/ps5/PS5_PS5.bmp",
-    PS5_R1_LINE,        // "resources/ps5/PS5_R1_Line.bmp",
-    PS5_R1_OFF,         // "resources/ps5/PS5_R1_Off.bmp",
-    PS5_R1_ON,          // "resources/ps5/PS5_R1_On.bmp",
-    PS5_R2_LINE,        // "resources/ps5/PS5_R2_Line.bmp",
-    PS5_R2_OFF,         // "resources/ps5/PS5_R2_Off.bmp",
-    PS5_R2_ON,          // "resources/ps5/PS5_R2_On.bmp",
-    PS5_R3,             // "resources/ps5/PS5_R3.bmp",
-    PS5_RIGHT,          // "resources/ps5/PS5_RIGHT.bmp",
-    PS5_RS,             // "resources/ps5/PS5_RS.bmp",
-    PS5_RS_X,           // "resources/ps5/PS5_RS_X.bmp",
-    PS5_RS_Y,           // "resources/ps5/PS5_RS_Y.bmp",
-    PS5_SQUARE,         // "resources/ps5/PS5_SQUARE.bmp",
-    PS5_TOUCH,          // "resources/ps5/PS5_TOUCH.bmp",
-    PS5_TRIANGLE,       // "resources/ps5/PS5_TRIANGLE.bmp",
-    PS5_UP,             // "resources/ps5/PS5_UP.bmp",
-    PS5_UP_DOWN,        // "resources/ps5/PS5_UP_DOWN.bmp",
+    // PS5_CIRCLE,         // "resources/ps5/PS5_CIRCLE.bmp",
+    // PS5_CREATE,         // "resources/ps5/PS5_CREATE.bmp",
+    // PS5_CROSS,          // "resources/ps5/PS5_CROSS.bmp",
+    // PS5_DIRECTIONAL,    // "resources/ps5/PS5_DIRECTIONAL.bmp",
+    // PS5_DOWN,           // "resources/ps5/PS5_DOWN.bmp",
+    // PS5_L1_LINE,        // "resources/ps5/PS5_L1_Line.bmp",
+    // PS5_L1_OFF,         // "resources/ps5/PS5_L1_Off.bmp",
+    // PS5_L1_ON,          // "resources/ps5/PS5_L1_On.bmp",
+    // PS5_L2_LINE,        // "resources/ps5/PS5_L2_Line.bmp",
+    // PS5_L2_OFF,         // "resources/ps5/PS5_L2_Off.bmp",
+    // PS5_L2_ON,          // "resources/ps5/PS5_L2_On.bmp",
+    // PS5_L3,             // "resources/ps5/PS5_L3.bmp",
+    // PS5_LEFT,           // "resources/ps5/PS5_LEFT.bmp",
+    // PS5_LEFT_RIGHT,     // "resources/ps5/PS5_LEFT_RIGHT.bmp",
+    // PS5_LS,             // "resources/ps5/PS5_LS.bmp",
+    // PS5_OPTIONS,        // "resources/ps5/PS5_OPTIONS.bmp",
+    // PS5_PS5,            // "resources/ps5/PS5_PS5.bmp",
+    // PS5_R1_LINE,        // "resources/ps5/PS5_R1_Line.bmp",
+    // PS5_R1_OFF,         // "resources/ps5/PS5_R1_Off.bmp",
+    // PS5_R1_ON,          // "resources/ps5/PS5_R1_On.bmp",
+    // PS5_R2_LINE,        // "resources/ps5/PS5_R2_Line.bmp",
+    // PS5_R2_OFF,         // "resources/ps5/PS5_R2_Off.bmp",
+    // PS5_R2_ON,          // "resources/ps5/PS5_R2_On.bmp",
+    // PS5_R3,             // "resources/ps5/PS5_R3.bmp",
+    // PS5_RIGHT,          // "resources/ps5/PS5_RIGHT.bmp",
+    // PS5_RS,             // "resources/ps5/PS5_RS.bmp",
+    // PS5_RS_X,           // "resources/ps5/PS5_RS_X.bmp",
+    // PS5_RS_Y,           // "resources/ps5/PS5_RS_Y.bmp",
+    // PS5_SQUARE,         // "resources/ps5/PS5_SQUARE.bmp",
+    // PS5_TOUCH,          // "resources/ps5/PS5_TOUCH.bmp",
+    // PS5_TRIANGLE,       // "resources/ps5/PS5_TRIANGLE.bmp",
+    // PS5_UP,             // "resources/ps5/PS5_UP.bmp",
+    // PS5_UP_DOWN,        // "resources/ps5/PS5_UP_DOWN.bmp",
 
-    CMD_01,             // "resources/cmd/CMD_01.bmp",
-    CMD_01_Dark,        // "resources/cmd/CMD_01_Dark.bmp",
-    CMD_02,             // "resources/cmd/CMD_02.bmp",
-    CMD_02_Dark,        // "resources/cmd/CMD_02_Dark.bmp",
-    CMD_03,             // "resources/cmd/CMD_03.bmp",
-    CMD_03_Dark,        // "resources/cmd/CMD_03_Dark.bmp",
-    CMD_04,             // "resources/cmd/CMD_04.bmp",
-    CMD_04_Dark,        // "resources/cmd/CMD_04_Dark.bmp",
-    CMD_05,             // "resources/cmd/CMD_05.bmp",
-    CMD_05_Dark,        // "resources/cmd/CMD_05_Dark.bmp",
-    CMD_06,             // "resources/cmd/CMD_06.bmp",
-    CMD_06_Dark,        // "resources/cmd/CMD_06_Dark.bmp",
-    CMD_07,             // "resources/cmd/CMD_07.bmp",
-    CMD_07_Dark,        // "resources/cmd/CMD_07_Dark.bmp",
-    CMD_08,             // "resources/cmd/CMD_08.bmp",
-    CMD_08_Dark,        // "resources/cmd/CMD_08_Dark.bmp",
-    CMD_09,             // "resources/cmd/CMD_09.bmp",
-    CMD_09_Dark,        // "resources/cmd/CMD_09_Dark.bmp",
-    CMD_10,             // "resources/cmd/CMD_10.bmp",
-    CMD_10_Dark,        // "resources/cmd/CMD_10_Dark.bmp",
-    CMD_11,             // "resources/cmd/CMD_11.bmp",
-    CMD_11_Dark,        // "resources/cmd/CMD_11_Dark.bmp",
-    CMD_12,             // "resources/cmd/CMD_12.bmp",
-    CMD_12_Dark,        // "resources/cmd/CMD_12_Dark.bmp",
-    CMD_13,             // "resources/cmd/CMD_13.bmp",
-    CMD_13_Dark,        // "resources/cmd/CMD_13_Dark.bmp",
-    CMD_14,             // "resources/cmd/CMD_14.bmp",
-    CMD_14_Dark,        // "resources/cmd/CMD_14_Dark.bmp",
-    CMD_15,             // "resources/cmd/CMD_15.bmp",
-    CMD_15_Dark,        // "resources/cmd/CMD_15_Dark.bmp",
-    CMD_16,             // "resources/cmd/CMD_16.bmp",
-    CMD_16_Dark,        // "resources/cmd/CMD_16_Dark.bmp",
-    CMD_17,             // "resources/cmd/CMD_17.bmp",
-    CMD_17_Dark,        // "resources/cmd/CMD_17_Dark.bmp",
-    CMD_18,             // "resources/cmd/CMD_18.bmp",
-    CMD_18_Dark,        // "resources/cmd/CMD_18_Dark.bmp",
-    CMD_35,             // "resources/cmd/CMD_35.bmp",
-    CMD_35_Dark,        // "resources/cmd/CMD_35_Dark.bmp",
-    CMD_38,             // "resources/cmd/CMD_38.bmp",
-    CMD_39,             // "resources/cmd/CMD_39.bmp",
-
+    // CMD_01,             // "resources/cmd/CMD_01.bmp",
+    // CMD_01_Dark,        // "resources/cmd/CMD_01_Dark.bmp",
+    // CMD_02,             // "resources/cmd/CMD_02.bmp",
+    // CMD_02_Dark,        // "resources/cmd/CMD_02_Dark.bmp",
+    // CMD_03,             // "resources/cmd/CMD_03.bmp",
+    // CMD_03_Dark,        // "resources/cmd/CMD_03_Dark.bmp",
+    // CMD_04,             // "resources/cmd/CMD_04.bmp",
+    // CMD_04_Dark,        // "resources/cmd/CMD_04_Dark.bmp",
+    // CMD_05,             // "resources/cmd/CMD_05.bmp",
+    // CMD_05_Dark,        // "resources/cmd/CMD_05_Dark.bmp",
+    // CMD_06,             // "resources/cmd/CMD_06.bmp",
+    // CMD_06_Dark,        // "resources/cmd/CMD_06_Dark.bmp",
+    // CMD_07,             // "resources/cmd/CMD_07.bmp",
+    // CMD_07_Dark,        // "resources/cmd/CMD_07_Dark.bmp",
+    // CMD_08,             // "resources/cmd/CMD_08.bmp",
+    // CMD_08_Dark,        // "resources/cmd/CMD_08_Dark.bmp",
+    // CMD_09,             // "resources/cmd/CMD_09.bmp",
+    // CMD_09_Dark,        // "resources/cmd/CMD_09_Dark.bmp",
+    // CMD_10,             // "resources/cmd/CMD_10.bmp",
+    // CMD_10_Dark,        // "resources/cmd/CMD_10_Dark.bmp",
+    // CMD_11,             // "resources/cmd/CMD_11.bmp",
+    // CMD_11_Dark,        // "resources/cmd/CMD_11_Dark.bmp",
+    // CMD_12,             // "resources/cmd/CMD_12.bmp",
+    // CMD_12_Dark,        // "resources/cmd/CMD_12_Dark.bmp",
+    // CMD_13,             // "resources/cmd/CMD_13.bmp",
+    // CMD_13_Dark,        // "resources/cmd/CMD_13_Dark.bmp",
+    // CMD_14,             // "resources/cmd/CMD_14.bmp",
+    // CMD_14_Dark,        // "resources/cmd/CMD_14_Dark.bmp",
+    // CMD_15,             // "resources/cmd/CMD_15.bmp",
+    // CMD_15_Dark,        // "resources/cmd/CMD_15_Dark.bmp",
+    // CMD_16,             // "resources/cmd/CMD_16.bmp",
+    // CMD_16_Dark,        // "resources/cmd/CMD_16_Dark.bmp",
+    // CMD_17,             // "resources/cmd/CMD_17.bmp",
+    // CMD_17_Dark,        // "resources/cmd/CMD_17_Dark.bmp",
+    // CMD_18,             // "resources/cmd/CMD_18.bmp",
+    // CMD_18_Dark,        // "resources/cmd/CMD_18_Dark.bmp",
+    // CMD_35,             // "resources/cmd/CMD_35.bmp",
+    // CMD_35_Dark,        // "resources/cmd/CMD_35_Dark.bmp",
+    // CMD_38,             // "resources/cmd/CMD_38.bmp",
+    // CMD_39,             // "resources/cmd/CMD_39.bmp",
+    PAKS_MAX, //
 };
 
 struct AppState
@@ -410,7 +419,8 @@ void wm_destroy(int);
 void StartVerify(HWND&, AppState&);
 int  VerifyIntegrity(std::string &err, AppState&);
 void ResetCursor(HWND &target);
-int KBL_build(HWND &hwnd, AppState &);
+int KB_build(HWND &hwnd, AppState &);
+int XSX_build(HWND &hwnd, AppState &);
 
 int preset(AppState &app, const int &cursor);
 int layout(AppState &app, const int &layout);
@@ -418,9 +428,7 @@ int clear(AppState &app);
 
 std::string GetComboText(HWND &);
 int GetComboCursor(HWND);
-const char* GetFolder(const int&);
-const char* GetSubFolder(const int&);
-std::vector<const char *> get_paths();
+const std::array<std::pair<fs::path, const char*>, PAKS_MAX> get_paths();
 std::vector<const char *> get_cmd();
 
 

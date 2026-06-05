@@ -18,6 +18,7 @@ SYS_LIB		=	-lgdi32
 
 SRC			=	$(SRC_PATH)Actor.cpp \
 				$(SRC_PATH)Bitmap.cpp \
+				$(SRC_PATH)build.cpp \
 				$(SRC_PATH)Button.cpp \
 				$(SRC_PATH)ComboBox.cpp \
 				$(SRC_PATH)main.cpp \

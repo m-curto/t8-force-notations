@@ -103,12 +103,13 @@ void wm_app1(HWND &, AppState &app)
 {
     std::cout << "WM_APP1" << std::endl;
     std::vector<const char *> name = get_cmd();
-    std::vector<const char *> bmp = get_paths();
+    std::array<std::pair<fs::path, const char*>, PAKS_MAX> paths = get_paths();
 
-    if (nm > bmp.size())
-        nm = bmp.size();
+    if (nm > paths.size())
+        nm = paths.size();
     for (size_t s = 0; s < nm; ++s) { // IF NOTATION_MAX < bmp.size() we segfualt ig
-        app.bmpNotations[s].load(bmp[s], NOTATION_W,NOTATION_H);
+        std::cout << "paths.size()==" << paths.size() <<"s==" << s << std::endl;
+        app.bmpNotations[s].load(paths[s].second, NOTATION_W,NOTATION_H);
     }
 
     for (size_t s = 0; s < BIND_MAX; ++s) {
@@ -116,13 +117,13 @@ void wm_app1(HWND &, AppState &app)
         for (auto n : name) {
             app.KB[s].addContent(n);
         }
-        for (auto b : bmp) {
-            app.notations[s].addContent(b);
+        for (auto b : paths) {
+            app.notations[s].addContent(b.second);
         }
     }
     for (size_t s = 0; s < XSX_MAX; ++s) {
-        for (auto b : bmp) {
-            app.XSX[s].addContent(b);
+        for (auto b : paths) {
+            app.XSX[s].addContent(b.second);
         }
     }
 
@@ -159,7 +160,10 @@ void wm_command(HWND &hwnd, WPARAM wParam, AppState &app) {
 
     if (LOWORD(wParam) == ID_BUILD)
     {
-        KBL_build(hwnd,app);
+        if (app.layout_current == LAYOUT_KB)
+            KB_build(hwnd,app);
+        else if (app.layout_current == LAYOUT_XSX)
+            XSX_build(hwnd,app);
     }
     else if (LOWORD(wParam) == ID_CLEAR)
     {
