@@ -9,7 +9,6 @@ Bitmap::Bitmap()
 Bitmap::Bitmap(const std::string &path,const int &width,const int &height)
 : Actor(101,path,0,0,width,height)
 {
-    std::cout << "NAME: " << name << std::endl;
     bmp = (HBITMAP)LoadImageA(
         NULL,
         name.c_str(),

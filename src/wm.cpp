@@ -108,7 +108,6 @@ void wm_app1(HWND &, AppState &app)
     if (nm > paths.size())
         nm = paths.size();
     for (size_t s = 0; s < nm; ++s) { // IF NOTATION_MAX < bmp.size() we segfualt ig
-        std::cout << "paths.size()==" << paths.size() <<"s==" << s << std::endl;
         app.bmpNotations[s].load(paths[s].second, NOTATION_W,NOTATION_H);
     }
 

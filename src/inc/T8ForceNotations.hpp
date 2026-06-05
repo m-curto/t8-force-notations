@@ -251,6 +251,36 @@ enum PAKS_NOTATION {
     NUM_VERTICAL_DARK_2,            // "resources/1234_vertical_dark/1234_vertical_dark_2.bmp",
     NUM_VERTICAL_DARK_3,            // "resources/1234_vertical_dark/1234_vertical_dark_3.bmp",
     NUM_VERTICAL_DARK_4,            // "resources/1234_vertical_dark/1234_vertical_dark_4.bmp",
+    XBOX_VERTICAL_1,    // "resources/xbox_vertical/xbox_vertical_1.bmp",
+    XBOX_VERTICAL_2,    // "resources/xbox_vertical/xbox_vertical_2.bmp",
+    XBOX_VERTICAL_3,    // "resources/xbox_vertical/xbox_vertical_3.bmp",
+    XBOX_VERTICAL_4,    // "resources/xbox_vertical/xbox_vertical_4.bmp",
+    XBOX_VERTICAL_DARK_1,    // "resources/xbox_vertical_dark/xbox_vertical_dark_1.bmp",
+    XBOX_VERTICAL_DARK_2,    // "resources/xbox_vertical_dark/xbox_vertical_dark_2.bmp",
+    XBOX_VERTICAL_DARK_3,    // "resources/xbox_vertical_dark/xbox_vertical_dark_3.bmp",
+    XBOX_VERTICAL_DARK_4,    // "resources/xbox_vertical_dark/xbox_vertical_dark_4.bmp",
+
+    XSX_X,                  // "resources/xsx/XSX_X.bmp",
+    XSX_Y,                  // "resources/xsx/XSX_Y.bmp",
+    XSX_A,                  // "resources/xsx/XSX_A.bmp",
+    XSX_B,                  // "resources/xsx/XSX_B.bmp",
+
+    PS5_SQUARE,         // "resources/ps5/PS5_SQUARE.bmp",
+    PS5_TRIANGLE,       // "resources/ps5/PS5_TRIANGLE.bmp",
+    PS5_CROSS,          // "resources/ps5/PS5_CROSS.bmp",
+    PS5_CIRCLE,         // "resources/ps5/PS5_CIRCLE.bmp",
+
+    XSX_LB,                 // "resources/xsx/XSX_LB.bmp",
+    XSX_RB,                 // "resources/xsx/XSX_RB.bmp",
+    XSX_LT_ON,              // "resources/xsx/XSX_LT_On.bmp",
+    XSX_RT_ON,              // "resources/xsx/XSX_RT_On.bmp",
+    XSX_L,                  // "resources/xsx/XSX_L.bmp",
+    XSX_R,                  // "resources/xsx/XSX_R.bmp",
+
+    XSX_MENU,               // "resources/xsx/XSX_MENU.bmp",
+    XSX_VIEW,               // "resources/xsx/XSX_VIEW.bmp",
+
+
 
     ARTS_CROUCHING,     // "resources/CMN_Arts/CMN_Arts_Crouching.bmp"
     ARTS_FLOORBREAK,    // "resources/CMN_Arts/CMN_Arts_FloorBreak.bmp"
@@ -267,13 +297,11 @@ enum PAKS_NOTATION {
     RAGE,               // "resources/cmn/RAGE.bmp",
     ZONE,               // "resources/cmn/ZONE.bmp",
 
-    // XSX_A,                  // "resources/xsx/XSX_A.bmp",
-    // XSX_B,                  // "resources/xsx/XSX_B.bmp",
     // XSX_COMMON,             // "resources/xsx/XSX_COMMON.bmp",
     // XSX_DIRECTIONAL,        // "resources/xsx/XSX_DIRECTIONAL.bmp",
     // XSX_DOWN,               // "resources/xsx/XSX_DOWN.bmp",
-    // XSX_L,                  // "resources/xsx/XSX_L.bmp",
-    // XSX_LB,                 // "resources/xsx/XSX_LB.bmp",
+
+
     // XSX_LB_LINE,            // "resources/xsx/XSX_LB_Line.bmp",
     // XSX_LB_OFF,             // "resources/xsx/XSX_LB_Off.bmp",
     // XSX_LEFT,               // "resources/xsx/XSX_LEFT.bmp",
@@ -281,10 +309,6 @@ enum PAKS_NOTATION {
     // XSX_LS,                 // "resources/xsx/XSX_LS.bmp",
     // XSX_LT_LINE,            // "resources/xsx/XSX_LT_Line.bmp",
     // XSX_LT_OFF,             // "resources/xsx/XSX_LT_Off.bmp",
-    // XSX_LT_ON,              // "resources/xsx/XSX_LT_On.bmp",
-    // XSX_MENU,               // "resources/xsx/XSX_MENU.bmp",
-    // XSX_R,                  // "resources/xsx/XSX_R.bmp",
-    // XSX_RB,                 // "resources/xsx/XSX_RB.bmp",
     // XSX_RB_LINE,            // "resources/xsx/XSX_RB_Line.bmp",
     // XSX_RB_OFF,             // "resources/xsx/XSX_RB_Off.bmp",
     // XSX_RIGHT,              // "resources/xsx/XSX_RIGHT.bmp",
@@ -293,16 +317,11 @@ enum PAKS_NOTATION {
     // XSX_RS_Y,               // "resources/xsx/XSX_RS_Y.bmp",
     // XSX_RT_LINE,            // "resources/xsx/XSX_RT_Line.bmp",
     // XSX_RT_OFF,             // "resources/xsx/XSX_RT_Off.bmp",
-    // XSX_RT_ON,              // "resources/xsx/XSX_RT_On.bmp",
     // XSX_UP,                 // "resources/xsx/XSX_UP.bmp",
     // XSX_UP_DOWN,            // "resources/xsx/XSX_UP_DOWN.bmp",
-    // XSX_VIEW,               // "resources/xsx/XSX_VIEW.bmp",
-    // XSX_X,                  // "resources/xsx/XSX_X.bmp",
-    // XSX_Y,                  // "resources/xsx/XSX_Y.bmp",
 
-    // PS5_CIRCLE,         // "resources/ps5/PS5_CIRCLE.bmp",
+
     // PS5_CREATE,         // "resources/ps5/PS5_CREATE.bmp",
-    // PS5_CROSS,          // "resources/ps5/PS5_CROSS.bmp",
     // PS5_DIRECTIONAL,    // "resources/ps5/PS5_DIRECTIONAL.bmp",
     // PS5_DOWN,           // "resources/ps5/PS5_DOWN.bmp",
     // PS5_L1_LINE,        // "resources/ps5/PS5_L1_Line.bmp",
@@ -328,9 +347,7 @@ enum PAKS_NOTATION {
     // PS5_RS,             // "resources/ps5/PS5_RS.bmp",
     // PS5_RS_X,           // "resources/ps5/PS5_RS_X.bmp",
     // PS5_RS_Y,           // "resources/ps5/PS5_RS_Y.bmp",
-    // PS5_SQUARE,         // "resources/ps5/PS5_SQUARE.bmp",
     // PS5_TOUCH,          // "resources/ps5/PS5_TOUCH.bmp",
-    // PS5_TRIANGLE,       // "resources/ps5/PS5_TRIANGLE.bmp",
     // PS5_UP,             // "resources/ps5/PS5_UP.bmp",
     // PS5_UP_DOWN,        // "resources/ps5/PS5_UP_DOWN.bmp",
 
@@ -430,6 +447,5 @@ std::string GetComboText(HWND &);
 int GetComboCursor(HWND);
 const std::array<std::pair<fs::path, const char*>, PAKS_MAX> get_paths();
 std::vector<const char *> get_cmd();
-
 
 #endif

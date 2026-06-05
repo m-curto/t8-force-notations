@@ -1,57 +1,37 @@
 #include "T8ForceNotations.hpp"
 
-std::vector<fs::path> notation_cmd = {fs::path("1"),fs::path("2"),fs::path("3"),fs::path("4")};
-
 int VerifyIntegrity(std::string &err, AppState &app)
 {
     fs::path current;// = fs::current_path();
-    app.verifyBar.setTotal((149*3*4) + (4*4*2) + (2));
+    app.verifyBar.setTotal((PAKS_MAX-1)*(FILE_MAX-2) + PAKS_MAX);
 
-    std::vector<const char*> notation_folder = {PAKS_FOLDER};
-    std::vector<const char*> notation_style = {"default","default_dark","xbox","xbox_dark","playstation","playstation_dark"};
+    std::vector<const char*> specific = {BMP_BG_KB, BMP_NONE}; //TODO
 
-    std::vector<const char*> bitmap_folder = {"resources"};
+    std::array<std::pair<fs::path,const char*>, PAKS_MAX> paths = get_paths();
 
-    std::vector<const char*> specific = {BMP_BG_KB, "resources/none.bmp"}; //TODO
-
-    for (auto ns : notation_style)
-    {
-        for (auto nc : notation_cmd)
+    for (auto p : paths) {
+        
+        for (int i = 1; i < FILE_MAX; i++)
         {
-            for (auto nf : notation_folder)
-            {
-                for (int i = 1; i < 150; i++)
-                {
-                    char pak[64], ucas[64], utoc[64];
-                    sprintf(pak, "pakchunk8%03d-Windows_P.pak", i);
-                    sprintf(ucas, "pakchunk8%03d-Windows_P.ucas", i);
-                    sprintf(utoc, "pakchunk8%03d-Windows_P.utoc", i);
-                    fs::path p_pak  = current / nf / ns / nc / pak;
-                    fs::path p_ucas = current / nf / ns / nc / ucas;
-                    fs::path p_utoc = current / nf / ns / nc / utoc;
-                    if (!fs::exists(p_pak))  { err += p_pak.string(); return false; }
-                    if (!fs::exists(p_ucas)) { err += p_pak.string(); return false; }
-                    if (!fs::exists(p_utoc)) { err += p_pak.string(); return false; }
-                    app.verifyBar.step();
-                }
-            }
+            if (p.first == "")
+                break ;
+            if (i == 198) // as intended CMD_36/CMD_37
+                continue;
+            char pak[64], ucas[64], utoc[64];
+            sprintf(pak, "pakchunk8%03d-Windows_P.pak", i);
+            sprintf(ucas, "pakchunk8%03d-Windows_P.ucas", i);
+            sprintf(utoc, "pakchunk8%03d-Windows_P.utoc", i);
+            fs::path p_pak  = p.first / pak;
+            fs::path p_ucas = p.first / ucas;
+            fs::path p_utoc = p.first / utoc;
+            if (!fs::exists(p_pak))  { err += p_pak.string(); return false; }
+            if (!fs::exists(p_ucas)) { err += p_pak.string(); return false; }
+            if (!fs::exists(p_utoc)) { err += p_pak.string(); return false; }
+            app.verifyBar.step();
         }
-    }
 
-    for (auto sf : notation_style)
-    {
-        for (auto f : bitmap_folder)
-        {
-            for (int i = 1; i < 5; i++)
-            {
-                char bmp[64];
-                sprintf(bmp, "%s_%d.bmp", sf, i);
-                fs::path p_bmp = current / f / sf / bmp;
-
-                if (!fs::exists(p_bmp))  { err += p_bmp.string(); return false; }
-                app.verifyBar.step();
-            }
-        }
+        if (!fs::exists(p.second))  { err += p.second; return false; }
+        app.verifyBar.step();
     }
 
     for (auto path : specific) {
@@ -61,7 +41,6 @@ int VerifyIntegrity(std::string &err, AppState &app)
     }
 
     SendMessage(app.verifyprogressbar, PBM_SETPOS, 100, 0);
-
     return 1;
 }
 
@@ -159,18 +138,18 @@ int preset(AppState &app, const int &c) {
             /*app.KB[11].setCursor(KC_PAGEDOWN); */ app.notations[11].setCursor(BLANK);  /*app.KB[23].setCursor(KC_F12);*/ app.notations[23].setCursor(BLANK);
         }
         else if (c == 4) { // "test"
-            app.KB[0].setCursor(KC_SPACE);      app.notations[0].setCursor(DEFAULT_1);              app.KB[12].setCursor(KC_1);     app.notations[12].setCursor(NOSELECT);
-            app.KB[1].setCursor(KC_S);          app.notations[1].setCursor(DEFAULT_DARK_1);         app.KB[13].setCursor(KC_2);     app.notations[13].setCursor(RAGE);
-            app.KB[2].setCursor(KC_A);          app.notations[2].setCursor(XBOX_1);                 app.KB[14].setCursor(KC_3);     app.notations[14].setCursor(ZONE);
-            app.KB[3].setCursor(KC_D);          app.notations[3].setCursor(XBOX_DARK_1);            app.KB[15].setCursor(KC_4);     app.notations[15].setCursor(DEFAULT_4);
-            app.KB[4].setCursor(KC_DELETE);     app.notations[4].setCursor(PLAYSTATION_1);          app.KB[16].setCursor(KC_5);     app.notations[16].setCursor(NONE);
-            app.KB[5].setCursor(KC_END);        app.notations[5].setCursor(PLAYSTATION_DARK_1);     app.KB[17].setCursor(KC_6);     app.notations[17].setCursor(NONE);
-            app.KB[6].setCursor(KC_INSERT);     app.notations[6].setCursor(NUM_1);                  app.KB[18].setCursor(KC_7);     app.notations[18].setCursor(NONE);
-            app.KB[7].setCursor(KC_HOME);       app.notations[7].setCursor(NUM_DARK_1);             app.KB[19].setCursor(KC_8);     app.notations[19].setCursor(NONE);
-            app.KB[8].setCursor(KC_CSBRACKET);  app.notations[8].setCursor(NUM_VERTICAL_1);         app.KB[20].setCursor(KC_9);     app.notations[20].setCursor(NONE);
-            app.KB[9].setCursor(KC_BACKSLASH);  app.notations[9].setCursor(PLAYSTATION_VERTICAL_1); app.KB[21].setCursor(KC_0);     app.notations[21].setCursor(NONE);
-            app.KB[10].setCursor(KC_PAGEUP);    app.notations[10].setCursor(ASSIST);                app.KB[22].setCursor(KC_F11);   app.notations[22].setCursor(NONE);
-            app.KB[11].setCursor(KC_PAGEDOWN);  app.notations[11].setCursor(BLANK);                 app.KB[23].setCursor(KC_F12);   app.notations[23].setCursor(NONE);
+            app.KB[0].setCursor(KC_SPACE);      app.notations[0].setCursor(DEFAULT_1);              app.KB[12].setCursor(KC_1);     app.notations[12].setCursor(XBOX_VERTICAL_1);
+            app.KB[1].setCursor(KC_S);          app.notations[1].setCursor(DEFAULT_DARK_1);         app.KB[13].setCursor(KC_2);     app.notations[13].setCursor(XBOX_VERTICAL_DARK_1);
+            app.KB[2].setCursor(KC_A);          app.notations[2].setCursor(XBOX_1);                 app.KB[14].setCursor(KC_3);     app.notations[14].setCursor(XSX_X);
+            app.KB[3].setCursor(KC_D);          app.notations[3].setCursor(XBOX_DARK_1);            app.KB[15].setCursor(KC_4);     app.notations[15].setCursor(PS5_SQUARE);
+            app.KB[4].setCursor(KC_DELETE);     app.notations[4].setCursor(NUM_1);                  app.KB[16].setCursor(KC_5);     app.notations[16].setCursor(ARTS_CROUCHING);
+            app.KB[5].setCursor(KC_END);        app.notations[5].setCursor(NUM_DARK_1);             app.KB[17].setCursor(KC_6);     app.notations[17].setCursor(ASSIST);
+            app.KB[6].setCursor(KC_INSERT);     app.notations[6].setCursor(PLAYSTATION_1);          app.KB[18].setCursor(KC_7);     app.notations[18].setCursor(NONE);
+            app.KB[7].setCursor(KC_HOME);       app.notations[7].setCursor(PLAYSTATION_DARK_1);     app.KB[19].setCursor(KC_8);     app.notations[19].setCursor(NONE);
+            app.KB[8].setCursor(KC_CSBRACKET);  app.notations[8].setCursor(PLAYSTATION_VERTICAL_1);         app.KB[20].setCursor(KC_9);     app.notations[20].setCursor(NONE);
+            app.KB[9].setCursor(KC_BACKSLASH);  app.notations[9].setCursor(PLAYSTATION_VERTICAL_DARK_1); app.KB[21].setCursor(KC_0);     app.notations[21].setCursor(NONE);
+            app.KB[10].setCursor(KC_PAGEUP);    app.notations[10].setCursor(NUM_VERTICAL_1);                app.KB[22].setCursor(KC_F11);   app.notations[22].setCursor(NONE);
+            app.KB[11].setCursor(KC_PAGEDOWN);  app.notations[11].setCursor(NUM_VERTICAL_DARK_1);        app.KB[23].setCursor(KC_F12);   app.notations[23].setCursor(NONE);
         }
     }
     else if (app.layout_current == LAYOUT_XSX) // WIP
