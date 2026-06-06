@@ -1,8 +1,10 @@
 #ifndef DEFINE_HPP
 # define DEFINE_HPP
 
-# define BMP_BG_KB  "resources/background3.bmp"
-# define BMP_BG_XSX "resources/background2.bmp"
+# define BMP_BG_KB  "resources/BG_KB.bmp"
+# define BMP_BG_XSX "resources/BG_XSX.bmp"
+# define BMP_BG_PS5 "resources/BG_PS5.bmp"
+# define BMP_BG_NOT "resources/BG_NOT.bmp"
 # define BMP_NONE   "resources/none.bmp"
 
 # define PAKS_FOLDER    "T8Paks"
@@ -118,12 +120,13 @@
 # define P1_FOLDER       "P1"
 # define P2_FOLDER       "P2"
 
-# define WINDOW_WIDTH    846
-# define WINDOW_HEIGHT   779
+# define WINDOW_WIDTH    807 // 846
+# define WINDOW_HEIGHT   730  // 779
 # define WINDOW_X        CW_USEDEFAULT
 # define WINDOW_Y        CW_USEDEFAULT
 
-# define CAPTION_VERIFY "Integrity Check"
+# define CAPTION_VERIFY     "Integrity Check"
+# define CAPTION_VERIFY_BTN "Verify Integrity"
 # define CAPTION_BUILD  "Build"
 
 # define MSG_VERIFY1 "MISSING FILE "
@@ -133,16 +136,18 @@
 # define FILE_MAX 298
 # define NOTATION_MAX 200
 # define BIND_MAX 24
-# define XSX_MAX 33
-# define BG_MAX 2
-# define PRESET_MAX 2
+# define XSX_MAX 32
+# define PS5_MAX 33
+# define COMMON_MAX 24
 
 # define NOTATION_W 25
 # define NOTATION_H 25
 
-# define ID_CB1_24            200
-# define ID_CB2_24            223
-# define ID_CB3_24            246
+# define ID_CB1     200                 // 200
+# define ID_CB2     ID_CB1 + BIND_MAX   // 224
+# define ID_CB3     ID_CB2 + XSX_MAX    // 257
+# define ID_CB4     ID_CB3 + PS5_MAX    // 290
+# define ID_CB5     ID_CB4 + PS5_MAX    // 223
 
 # define COLOR_NORMAL        ""
 # define COLOR_RESET         "\033[m"

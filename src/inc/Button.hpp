@@ -18,6 +18,7 @@ class Button : public Actor
         Button(const Button &);
         Button(HWND &hwnd,const UINT_PTR &ID,const std::string &name,const int &x,const int &y,const int &w,const int &h);
 
+        void init(HWND &hwnd,const UINT_PTR &ID,const std::string &name,const int &x,const int &y,const int &w,const int &h);
         ~Button();
         Button& operator=(const Button &);
 

@@ -26,6 +26,16 @@ std::ostream& operator<<(std::ostream& os, const Actor &) {
     return os;
 }
 
+void Actor::init(HWND &hwnd, const UINT_PTR &ID,const std::string &name,const int &xPos,const int &yPos,const int &width,const int &height) {
+    this->ID = ID;
+    this->hwnd = hwnd;
+    this->name = name;
+    this->x = xPos;
+    this->y = yPos;
+    this->w = width;
+    this->h = height;
+}
+
 void Actor::setPos(const int &newX, const int &newY) {
     x = newX;
     y = newY;

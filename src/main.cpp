@@ -6,6 +6,8 @@ AppState app;
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    // std::string debug = wm_tostring(msg);
+    // if (!debug.empty()) std::cout << debug << std::endl;
     switch (msg)
     {
     case WM_CREATE:
@@ -17,6 +19,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_PAINT:
         wm_paint(hwnd, app);
+        break;
+    case WM_MOVE:
+        wm_move(hwnd, app);
+        break;
+    case WM_SIZE:
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+        std::cout << "window: " << rect.right - rect.left << "x" << rect.bottom - rect.top << std::endl;
         break;
     case WM_COMMAND:
         wm_command(hwnd,wParam, app);
@@ -59,21 +69,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     RECT rect;
     int width = 13;
     int height = 13;
-    if(GetWindowRect(hwnd, &rect))
+    if (GetWindowRect(hwnd, &rect))
     {
         width = rect.right - rect.left;
         height = rect.bottom - rect.top;
     }
     std::cout << "window: " << width << "x" << height << std::endl;
-
     // SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)&app);
-
     MSG msg;
     while (GetMessageW(&msg, NULL, 0, 0))
     {
         TranslateMessage(&msg);
         DispatchMessageW(&msg);
     }
+
+    DestroyWindow(hwnd);
     return (int)msg.wParam;
 }
 

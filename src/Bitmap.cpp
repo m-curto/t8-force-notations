@@ -29,7 +29,24 @@ Bitmap& Bitmap::operator=(const Bitmap &other) {
     return *this;
 }
 
-Bitmap::~Bitmap() {}
+Bitmap::~Bitmap() {
+    if (bmp) {
+        DeleteObject(bmp);
+        bmp = nullptr;
+    }
+}
+
+void Bitmap::init(HWND &hwnd, const std::string &path,const int &x,const int &y,const int &width,const int &height) {
+    Actor::init(hwnd,0,path,x,y,width,height);
+    this->~Bitmap();
+    bmp = (HBITMAP)LoadImageA(
+        NULL,
+        name.c_str(),
+        IMAGE_BITMAP,
+        w,h,
+        LR_LOADFROMFILE
+    );
+}
 
 int Bitmap::paint(HDC &hdc) {
     HDC memDC = CreateCompatibleDC(hdc);
@@ -44,7 +61,7 @@ int Bitmap::paint(HDC &hdc) {
         DeleteDC(memDC);
         return 0;
     }
-    BitBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, memDC, 0, 0, SRCCOPY);
+    BitBlt(hdc, x, y, bm.bmWidth, bm.bmHeight, memDC, 0, 0, SRCCOPY);
     DeleteDC(memDC);
     return 1;
 }

@@ -24,7 +24,17 @@ ProgressBar& ProgressBar::operator=(const ProgressBar &other) {
     return *this;
 }
 
-ProgressBar::~ProgressBar() {}
+ProgressBar::~ProgressBar() {
+    DestroyWindow(hwnd);
+}
+
+void ProgressBar::init(HWND &hwnd,const UINT_PTR &ID,const int &xPos,const int &yPos,const int &width,const int &height) {
+    Actor::init(this->hwnd,ID,name,xPos,yPos,width,height);
+    this->hwnd = CreateWindowEx(
+        0, PROGRESS_CLASS, (LPTSTR)NULL,WS_CHILD | WS_VISIBLE,
+        x, y, w, h, hwnd, reinterpret_cast<HMENU>(ID), GetModuleHandle(NULL), NULL);
+    SendMessage(this->hwnd, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
+}
 
 void ProgressBar::step() {
     if (p < total)

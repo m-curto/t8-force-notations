@@ -10,6 +10,7 @@ T8FN lets you:
 - automatically build a ready-to-use mod folder.
 
 ## How it works
+<img align=center src="https://github.com/m-curto/t8-force-notations/blob/main/resources/readme/preview1.png">
 
 T8 Force Notations reads your inputs, pick the correct files, rearranges them, and generates a keyboard layout `KBL`.
 

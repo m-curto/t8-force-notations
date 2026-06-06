@@ -1,6 +1,9 @@
 #ifndef T8FORCENOTATIONS_HPP
 # define T8FORCENOTATIONS_HPP
 
+# define UNICODE
+# define _UNICODE
+
 # include <windows.h>
 # include <sys/stat.h>
 # include <iostream>
@@ -23,12 +26,16 @@ namespace fs = std::filesystem;
 enum ID_LAYOUT {
     LAYOUT_KB = 0,
     LAYOUT_XSX,
+    LAYOUT_PS5,
+    LAYOUT_MAX
 };
 
 enum ID_BACKGROUND {
     BG_KB = 0,
     BG_XSX,
-    BG_PS,
+    BG_PS5,
+    BG_NOT,
+    BG_MAX
 };
 
 enum ID_SLOT {
@@ -42,8 +49,10 @@ enum ID_SLOT {
     ID_PRESET,
     ID_PRESET_KB_CB,
     ID_PRESET_XSX_CB,
+    ID_PRESET_PS5_CB,
     ID_LAYOUT_CB,
-    ID_CONTROLLER,
+    ID_PREVIEW,
+    ID_PREVIEW_WINDOW,
 };
 
 enum KEYCODE {
@@ -280,8 +289,6 @@ enum PAKS_NOTATION {
     XSX_MENU,               // "resources/xsx/XSX_MENU.bmp",
     XSX_VIEW,               // "resources/xsx/XSX_VIEW.bmp",
 
-
-
     ARTS_CROUCHING,     // "resources/CMN_Arts/CMN_Arts_Crouching.bmp"
     ARTS_FLOORBREAK,    // "resources/CMN_Arts/CMN_Arts_FloorBreak.bmp"
     ARTS_GAUGE,         // "resources/CMN_Arts/CMN_Arts_Gauge.bmp"
@@ -300,7 +307,6 @@ enum PAKS_NOTATION {
     // XSX_COMMON,             // "resources/xsx/XSX_COMMON.bmp",
     // XSX_DIRECTIONAL,        // "resources/xsx/XSX_DIRECTIONAL.bmp",
     // XSX_DOWN,               // "resources/xsx/XSX_DOWN.bmp",
-
 
     // XSX_LB_LINE,            // "resources/xsx/XSX_LB_Line.bmp",
     // XSX_LB_OFF,             // "resources/xsx/XSX_LB_Off.bmp",
@@ -398,23 +404,24 @@ struct AppState
 {
     Bitmap bmpNotations[NOTATION_MAX];
 
-    HWND verifyprogressbar;
     ComboBox KB[BIND_MAX];
-    ComboBox notations[BIND_MAX];
+    ComboBox KBn[BIND_MAX];
 
     ComboBox XSX[XSX_MAX];
+    ComboBox PS5[PS5_MAX];
+
+    ComboBox common[BIND_MAX];
 
     int background_current = BG_KB;
     int layout_current = LAYOUT_KB;
     Bitmap background[BG_MAX];
-
 
     Button      buildBtn;
     ComboBox    buildCb;
     ProgressBar buildBar;
 
     Button      presetBtn;
-    ComboBox    presetCb[PRESET_MAX];
+    ComboBox    presetCb[LAYOUT_MAX];
 
     ComboBox    layoutCb;
 
@@ -422,6 +429,9 @@ struct AppState
     ProgressBar verifyBar;
 
     Button      clearBtn;
+
+    HWND    preview;
+    Button  previewBtn;
 
 };
 
@@ -431,21 +441,24 @@ void wm_app1(HWND&, AppState&);
 void wm_command(HWND&, WPARAM, AppState&);
 int wm_drawitem(HWND &, WPARAM, LPARAM, AppState&);
 int wm_measureitem(HWND &, WPARAM, LPARAM lParam, AppState&);
+void wm_move(HWND &hwnd, AppState &app);
 void wm_destroy(int);
 
 void StartVerify(HWND&, AppState&);
 int  VerifyIntegrity(std::string &err, AppState&);
-void ResetCursor(HWND &target);
+
 int KB_build(HWND &hwnd, AppState &);
 int XSX_build(HWND &hwnd, AppState &);
 
 int preset(AppState &app, const int &cursor);
-int layout(AppState &app, const int &layout);
+int layout(HWND &hwnd, AppState &app, const int &layout, const int &force);
 int clear(AppState &app);
 
 std::string GetComboText(HWND &);
 int GetComboCursor(HWND);
 const std::array<std::pair<fs::path, const char*>, PAKS_MAX> get_paths();
 std::vector<const char *> get_cmd();
+const std::vector<const char *> get_paths_bmp();
+const char *wm_tostring(const int &msg);
 
 #endif

@@ -4,6 +4,10 @@ std::vector<const char *> get_cmd() {
     return {"- -","0","1","2","3","4","5","6","7","8","9","Space","Ctrl.",".Ctrl",".Shift","Shift.","Insert","Home","PageUp","Delete","End","PageDown","ArrowUp","ArrowLeft","ArrowRight","ArrowDown","NumPad 0","NumPad 1","NumPad 2","NumPad 3","NumPad 4","NumPad 5","NumPad 6","NumPad 7","NumPad 8","NumPad 9","NumPad /","NumPad *","NumPad -","NumPad +","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","-","^","¥","@","[","]",";",":",",",".","/","\\","=","`",")","$","Ù","*","!","ß","'","Ü","+","Ö","Ä","Ì","È","Ò","À","i","Ñ","Ç","~","¿","<","ظ","ฟ","²","#","o̲","}","|","{","Ж","б","ю","ë","x","ъ","Э","ك","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","TODO","_","TODO","TODO","TODO","TODO","\'","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","tab",".Alt","Alt.","CapsLock","ScrollLock"};
 }
 
+const std::vector<const char *> get_paths_bmp() {
+    return {BMP_BG_KB,BMP_BG_XSX,BMP_BG_PS5,BMP_NONE};
+}
+
 const std::array<std::pair<fs::path,const char *>, PAKS_MAX> get_paths() {
 
     std::array<std::pair<fs::path,const char *>, PAKS_MAX> arr{};

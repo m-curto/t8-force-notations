@@ -1,13 +1,13 @@
 NAME		=	a.exe
 CC			=	g++
 
-CFLAGS		=	-Wall -Wextra -static
-#  -mwindows
+# CFLAGS		=	-Wall -Wextra -static -g3
+CFLAGS		=	-Wall -Wextra -static -mwindows
 DFLAGS		=	-MMD -MP
 
 SRC_PATH	=	src/
 OBJ_PATH	=	.build/
-INC_PATH	=	$(SRC_PATH)inc/
+INC_PATH	=	$(SRC_PATH)inc
 DEPS		=	$(OBJ:.o=.d)
 
 LOC_LIB		=	-I$(INC_PATH)
@@ -25,6 +25,7 @@ SRC			=	$(SRC_PATH)Actor.cpp \
 				$(SRC_PATH)ProgressBar.cpp \
 				$(SRC_PATH)struct.cpp \
 				$(SRC_PATH)utils.cpp \
+				$(SRC_PATH)verify.cpp \
 				$(SRC_PATH)wm.cpp
 
 OBJ			=	$(SRC:$(SRC_PATH)%.cpp=$(OBJ_PATH)%.o)
@@ -40,7 +41,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp Makefile
 -include $(DEPS)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(GLFW_LIB) $(SYS_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(SYS_LIB) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ_PATH)

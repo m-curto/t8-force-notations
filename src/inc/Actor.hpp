@@ -20,10 +20,12 @@ class Actor
         Actor& operator=(const Actor &);
 
         void setPos(const int &x,const int &y);
+        void init(HWND &hwnd, const UINT_PTR &ID,const std::string &name,const int &xPos,const int &yPos,const int &width,const int &height);
+
         WINBOOL window(const int &x);
 
         UINT_PTR ID;
-        HWND hwnd;
+        HWND hwnd = 0;
     protected:
         std::string name;
         int     x,y,w,h;

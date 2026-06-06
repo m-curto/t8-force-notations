@@ -4,7 +4,7 @@ int KB_build(HWND &hwnd, AppState &app)
 {
     int total = 0;
     for (int s = 0; s < BIND_MAX; ++s) {
-        if (app.KB[s].getCursor() > 0 && app.notations[s].getCursor() > 0) total += 4;
+        if (app.KB[s].getCursor() > 0 && app.KBn[s].getCursor() > 0) total += 4;
     }
     app.buildBar.setTotal(total);
 
@@ -17,7 +17,7 @@ int KB_build(HWND &hwnd, AppState &app)
     for (int s = 0; s < BIND_MAX; ++s)
     {
         int btn = app.KB[s].getCursor();
-        int cmd = app.notations[s].getCursor();
+        int cmd = app.KBn[s].getCursor();
 
         if (btn > 0 && cmd > 0) {
             if (cmd < 0 || cmd >= PAKS_MAX) {

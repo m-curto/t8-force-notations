@@ -25,7 +25,18 @@ ComboBox& ComboBox::operator=(const ComboBox &other) {
     return *this;
 }
 
-ComboBox::~ComboBox() {}
+ComboBox::~ComboBox() {
+    DestroyWindow(hwnd);
+}
+
+void ComboBox::init(HWND &hwnd,const UINT_PTR &ID,const int &x,const int &y,const int &w,const int &h, const int &flag) {
+    Actor::init(this->hwnd,ID,name,x,y,w,h);
+    this->hwnd = CreateWindowExA(
+        0, "COMBOBOX", NULL, WS_CHILD | CBS_DROPDOWNLIST | WS_VSCROLL | flag,
+        x, y, w, h,hwnd,reinterpret_cast<HMENU>(ID),GetModuleHandle(NULL),NULL
+    );
+    SendMessageA(this->hwnd, CB_SETCURSEL, 0, 0);
+}
 
 void ComboBox::setFont(const int &size) {
     HFONT font = CreateFontA(

@@ -13,6 +13,7 @@ class ProgressBar : public Actor
         ~ProgressBar();
         ProgressBar& operator=(const ProgressBar &);
 
+        void init(HWND &hwnd,const UINT_PTR &ID,const int &xPos,const int &yPos,const int &width,const int &height);
         void step();
         void reset();
 

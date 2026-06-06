@@ -13,6 +13,7 @@ class ComboBox : public Actor
         ~ComboBox();
         ComboBox& operator=(const ComboBox&);
 
+        void init(HWND &hwnd,const UINT_PTR &ID,const int &x,const int &y,const int &w,const int &h, const int &flag = 0);
         void setFont(const int &size);
         void addContent(const std::string &);
         int getCursor();

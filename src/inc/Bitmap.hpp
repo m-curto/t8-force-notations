@@ -13,13 +13,15 @@ class Bitmap : public Actor
         ~Bitmap();
         Bitmap& operator=(const Bitmap &);
 
+        void init(HWND &hwnd, const std::string &path,const int &x,const int &y,const int &width,const int &height);
+
         int paint(HDC &);
         int draw(LPDRAWITEMSTRUCT &);
 
         int load(const char *path, const int &width,const int &height);
 
     public:
-        HBITMAP bmp;
+        HBITMAP bmp = nullptr;
 };
 
 
